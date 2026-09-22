@@ -21,8 +21,27 @@ A simple chatbot made with just HTML, CSS and JavaScript. No frameworks, no serv
 - Everything is in one file: `elhadaba.html`
 - The bot has a "brain" which is just a list of keywords and answers
 - When you send a message it looks for a keyword it knows and replies
+- Keywords match whole words only, so "hi" does not match inside "think"
+- Repeated letters get squashed, so "hiii" and "helloo" still work
+- Plurals work too, so "loops" finds "loop"
 - If you share an idea (like "I think..." or "what if...") it praises it first
-- It can also do simple maths like `12 * 4`
+
+## Maths it can do
+
+It understands symbols and words, so all of these work:
+
+- `12 * 4` and `10 plus 10`
+- `50 minus 8`, `6 times 7`, `100 divided by 4`
+- `20% of 50`
+- `square root of 144`
+
+## What it knows about
+
+Coding (HTML, CSS, JavaScript, Python, Java, C++, SQL, Git, variables, loops,
+arrays, functions, APIs), science (gravity, DNA, atoms, planets, the human
+body, electricity), maths (pi, primes, areas, algebra), geography (capital
+cities, rivers, mountains, continents), plus school and study tips, jokes,
+football and small talk.
 
 ## Adding more knowledge
 

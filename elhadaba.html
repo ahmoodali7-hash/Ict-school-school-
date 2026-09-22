@@ -58,6 +58,12 @@
       background: #2f2f2f;
     }
 
+    /* the little "typing..." bubble */
+    .typing {
+      opacity: 0.6;
+      font-style: italic;
+    }
+
     /* the bottom part with the input box */
     #inputArea {
       display: flex;
@@ -90,6 +96,11 @@
 
     button:hover {
       background: #0d8a6a;
+    }
+
+    /* on a phone the bubbles can be wider */
+    @media (max-width: 600px) {
+      .msg { max-width: 85%; }
     }
   </style>
 </head>
@@ -124,46 +135,117 @@
       "Wow, I like the way you think!",
       "Great thinking, that's a smart point!",
       "Honestly that's a solid idea, nice one!",
-      "Good one! You clearly know what you're talking about."
+      "Good one! You clearly know what you're talking about.",
+      "Ooo that's clever, I wouldn't have thought of that!"
     ];
 
-    // random ways to start an answer
+    // random ways to start an answer (only used for questions)
     var starters = [
       "Good question! ",
       "Nice, I can help with that. ",
       "Sure thing! ",
-      "Okay so, "
+      "Okay so, ",
+      "Easy one. "
+    ];
+
+    // random things to say when it has no clue
+    var noClue = [
+      "Hmm, I don't know that one yet 😅",
+      "You got me there, I haven't learned that one!",
+      "Not sure about that one to be honest."
     ];
 
     // ================================
     //  the "brain" - what Elhadaba knows
     //  each one has some keywords and an answer
+    //  IMPORTANT: put the specific ones first,
+    //  because the first match wins
     // ================================
     var brain = [
-      { keys: ["hello", "hi", "hey", "salam"],
+
+      // ---------- saying hello ----------
+      { keys: ["good morning"], answer: "Good morning! ☀️ Hope you have a great day." },
+      { keys: ["good night", "goodnight"], answer: "Good night! Sleep well 😴" },
+      { keys: ["good evening"], answer: "Good evening! How's your day been?" },
+
+      { keys: ["hello", "hi", "hii", "hey", "heyy", "hiya", "yo", "salam", "sup", "whats up", "what's up", "wassup"],
         answer: "Hey there! I'm Elhadaba 🤖 Ask me anything you want." },
 
-      { keys: ["your name", "who are you", "what are you"],
-        answer: "I'm Elhadaba, a simple chatbot. Kind of like ChatGPT but way more chill 😎" },
-
-      { keys: ["how are you", "how r u", "how are u"],
+      { keys: ["how are you", "how r u", "how are u", "how you doing"],
         answer: "I'm doing great, thanks for asking! How about you?" },
 
-      { keys: ["what can you do", "help", "what do you do"],
-        answer: "I can answer questions about coding, science, geography, maths and general stuff. I can also tell jokes and I'll always give my honest opinion on your ideas!" },
+      { keys: ["your name", "who are you", "what are you", "whats your name", "what's your name"],
+        answer: "I'm Elhadaba, a simple chatbot. Kind of like ChatGPT but way more chill 😎" },
 
-      { keys: ["joke", "funny"],
+      { keys: ["who made you", "who created you", "who built you", "your creator"],
+        answer: "I was built by a student using HTML, CSS and JavaScript. Pretty cool right?" },
+
+      { keys: ["are you human", "are you real", "are you a robot", "are you ai"],
+        answer: "Nope, I'm a robot 🤖 Just some JavaScript code running in your browser." },
+
+      { keys: ["how old are you", "your age"],
+        answer: "I was made today basically, so I'm brand new! 👶" },
+
+      { keys: ["what can you do", "help me", "what do you do", "how do you work"],
+        answer: "I can answer questions about coding, science, maths, geography and general stuff. I can do sums, tell jokes, and I'll always give my honest opinion on your ideas!" },
+
+      { keys: ["i love you", "love you"], answer: "Aww that's sweet! I like you too 💚" },
+      { keys: ["lol", "haha", "hahaha", "lmao"], answer: "Haha glad you liked that 😄" },
+      { keys: ["thank", "thanks", "thx", "shukran"], answer: "You're welcome! Anytime 😊" },
+      { keys: ["sorry"], answer: "No worries at all, we're good 👍" },
+      { keys: ["ok", "okay", "cool", "nice", "alright"], answer: "👍 What else you wanna know?" },
+      { keys: ["bye", "goodbye", "see you", "cya"], answer: "Bye! Come back whenever you want to chat 👋" },
+
+      // ---------- feelings ----------
+      { keys: ["i am sad", "im sad", "i'm sad", "feeling sad", "depressed"],
+        answer: "Sorry to hear that 💙 Bad days happen to everyone. Talk to someone you trust, it really helps." },
+      { keys: ["i am tired", "im tired", "i'm tired", "exhausted"],
+        answer: "Take a break, seriously. Even 10 minutes away from the screen makes a big difference 😌" },
+      { keys: ["stressed", "stress", "anxious"],
+        answer: "Deep breath. Break the big thing into small steps and just do the first one. You got this 💪" },
+      { keys: ["bored"],
+        answer: "Ask me for a joke, or go build something small in code. Boredom is where good ideas start!" },
+
+      // ---------- favourites ----------
+      { keys: ["favourite colour", "favorite color", "favourite color"], answer: "Green, obviously. Look at my buttons 💚" },
+      { keys: ["favourite food", "favorite food"], answer: "I can't eat, but if I could it would be pizza 🍕" },
+      { keys: ["favourite game", "favorite game"], answer: "Chess. Simple rules, impossible to master ♟️" },
+
+      { keys: ["joke", "funny", "make me laugh"],
         answer: "Why do programmers prefer dark mode? Because light attracts bugs 🐛😂" },
 
-      { keys: ["time"],
-        answer: function() { return "Right now it's " + new Date().toLocaleTimeString(); } },
+      { keys: ["time"], answer: function() { return "Right now it's " + new Date().toLocaleTimeString(); } },
+      { keys: ["date", "today"], answer: function() { return "Today is " + new Date().toDateString(); } },
+      { keys: ["weather", "raining", "sunny"],
+        answer: "I can't check the weather, I have no internet access. Try looking out the window 😄" },
 
-      { keys: ["date", "today"],
-        answer: function() { return "Today is " + new Date().toDateString(); } },
+      // ---------- coding ----------
+      { keys: ["what is a variable", "variable"],
+        answer: "A variable is like a box that stores a value. For example: var age = 17; Now 'age' holds the number 17 and you can use it later." },
 
-      // ---- coding stuff ----
+      { keys: ["what is a function", "function"],
+        answer: "A function is a block of code you write once and can run as many times as you want. Like a recipe you can reuse 🍳" },
+
+      { keys: ["if statement", "condition", "else"],
+        answer: "An if statement makes a decision. Like: if (age > 17) { drive(); } else { wait(); } The code only runs when the condition is true." },
+
+      { keys: ["loop", "for loop", "while loop"],
+        answer: "A loop repeats code multiple times. A 'for' loop is the most common: for (var i = 0; i < 5; i++) { ... } That runs 5 times." },
+
+      { keys: ["array", "list"],
+        answer: "An array is a list of things in one variable. Like: var friends = ['Ali', 'Omar', 'Sara']; You get the first one with friends[0]." },
+
+      { keys: ["object"],
+        answer: "An object stores related info together. Like: var me = { name: 'Ali', age: 17 }; Then me.name gives you 'Ali'." },
+
+      { keys: ["bug", "debug", "error"],
+        answer: "A bug is a mistake in your code. To find it, press F12 in your browser and check the Console tab, the red text tells you what broke 🐛" },
+
+      { keys: ["algorithm"],
+        answer: "An algorithm is just a set of steps to solve a problem. A recipe is an algorithm. So is the way you sort a deck of cards." },
+
       { keys: ["html"],
-        answer: "HTML is the language used to build the structure of web pages. It uses tags like <h1>, <p> and <div>. Every website you see uses it!" },
+        answer: "HTML is the language used to build the structure of web pages. It uses tags like h1, p and div. Every website you see uses it!" },
 
       { keys: ["css"],
         answer: "CSS is what makes websites look nice. It controls colours, fonts, spacing and layouts. HTML is the skeleton, CSS is the clothes 👕" },
@@ -174,22 +256,45 @@
       { keys: ["python"],
         answer: "Python is one of the easiest programming languages to learn. It's used for AI, websites, games and data. Great first language to start with!" },
 
-      { keys: ["what is a variable", "variable"],
-        answer: "A variable is like a box that stores a value. For example: var age = 17; Now 'age' holds the number 17 and you can use it later." },
+      { keys: ["java"],
+        answer: "Java is a big popular language used for Android apps and large company systems. Careful, Java and JavaScript are totally different things!" },
 
-      { keys: ["function"],
-        answer: "A function is a block of code you write once and can run as many times as you want. Like a recipe you can reuse 🍳" },
+      { keys: ["c++", "c plus plus"],
+        answer: "C++ is a fast, powerful language used for games, engines and software that needs speed. It's harder than Python though." },
 
-      { keys: ["loop"],
-        answer: "A loop repeats code multiple times. A 'for' loop is the most common one, like: for (var i = 0; i < 5; i++) { ... }" },
+      { keys: ["sql", "database"],
+        answer: "A database stores data in tables, and SQL is the language you use to ask it questions. Like: SELECT * FROM students;" },
 
-      { keys: ["what is ai", "artificial intelligence", "chatgpt"],
-        answer: "AI (artificial intelligence) is when computers do things that normally need human thinking, like talking, recognising pictures or playing chess. ChatGPT is a big AI. I'm a tiny one 😄" },
+      { keys: ["git", "github"],
+        answer: "Git saves the history of your code so you can go back if you break something. GitHub is the website where you store it online 🐙" },
+
+      { keys: ["react", "framework", "library"],
+        answer: "A framework or library is code other people wrote that you can reuse. React is a popular one for building websites faster." },
+
+      { keys: ["api"],
+        answer: "An API is how two programs talk to each other. Like a waiter: you order, it goes to the kitchen, it brings back your data 🍽️" },
+
+      { keys: ["how do i learn to code", "how to learn coding", "start coding", "learn programming"],
+        answer: "Start small! Learn HTML and CSS first, then JavaScript or Python. Build tiny projects like a calculator or a chatbot. Building beats watching tutorials every time 💪" },
+
+      { keys: ["what is programming", "what is coding", "coding", "programming", "code"],
+        answer: "Programming is writing instructions that tell a computer exactly what to do. The computer is fast but dumb, you're the brain 🧠" },
+
+      // ---------- tech and ai ----------
+      { keys: ["what is ai", "artificial intelligence", "chatgpt", "machine learning"],
+        answer: "AI is when computers do things that normally need human thinking, like talking, recognising pictures or playing chess. ChatGPT is a big AI. I'm a tiny one 😄" },
 
       { keys: ["computer"],
-        answer: "A computer is a machine that takes input, processes it with the CPU, stores stuff in memory, and gives output. Basically a super fast calculator!" },
+        answer: "A computer takes input, processes it with the CPU, stores stuff in memory, and gives output. Basically a super fast calculator!" },
 
-      // ---- science stuff ----
+      { keys: ["cpu", "processor"], answer: "The CPU is the brain of the computer. It does all the calculations, billions of them every second." },
+      { keys: ["ram", "memory"], answer: "RAM is short term memory. It holds what you're using right now. Turn the computer off and it's gone." },
+      { keys: ["internet", "wifi"], answer: "The internet is millions of computers connected together, sending data to each other. WiFi is just the wireless way to join in 📶" },
+      { keys: ["browser", "chrome", "firefox"], answer: "A browser is the app that reads HTML, CSS and JavaScript and turns it into the page you see. Chrome, Firefox and Safari are browsers." },
+      { keys: ["virus", "malware", "hacker"], answer: "A virus is a program made to damage or steal. Keep your software updated, don't click weird links, and use strong passwords 🔒" },
+      { keys: ["password"], answer: "Use a long password, mix letters, numbers and symbols, and never reuse it on different sites 🔐" },
+
+      // ---------- science ----------
       { keys: ["gravity"],
         answer: "Gravity is the force that pulls things towards each other. On Earth it pulls everything down at about 9.8 m/s². That's why stuff falls!" },
 
@@ -200,29 +305,89 @@
         answer: "Water is H2O, two hydrogen atoms and one oxygen atom. It boils at 100°C and freezes at 0°C." },
 
       { keys: ["speed of light"],
-        answer: "The speed of light is about 300,000 km per second. That's fast enough to go around the Earth 7 times in one second!" },
+        answer: "The speed of light is about 300,000 km per second. Fast enough to go around the Earth 7 times in one second!" },
 
-      { keys: ["planet", "solar system"],
-        answer: "There are 8 planets in our solar system: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus and Neptune. Jupiter is the biggest 🪐" },
+      { keys: ["solar system", "planet"],
+        answer: "There are 8 planets: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus and Neptune. Jupiter is the biggest 🪐" },
 
-      // ---- geography ----
+      { keys: ["sun"], answer: "The Sun is a star made mostly of hydrogen. It's about 150 million km away and its light takes 8 minutes to reach us ☀️" },
+      { keys: ["moon"], answer: "The Moon orbits Earth every 27 days. Its gravity is what causes the tides in the sea 🌙" },
+      { keys: ["earth"], answer: "Earth is the third planet from the Sun, about 4.5 billion years old, and the only place we know with life 🌍" },
+      { keys: ["dinosaur"], answer: "Dinosaurs lived over 65 million years ago and were wiped out by an asteroid. Birds are actually their living relatives 🦖" },
+      { keys: ["dna"], answer: "DNA is the instruction manual inside your cells. It decides your eye colour, height and loads more. It's shaped like a twisted ladder 🧬" },
+      { keys: ["atom"], answer: "An atom is the tiny building block of everything. It has protons and neutrons in the middle, with electrons going around them ⚛️" },
+      { keys: ["cell"], answer: "Cells are the smallest living units. Your body has around 30 trillion of them, all doing different jobs." },
+      { keys: ["heart"], answer: "Your heart pumps blood around your body about 100,000 times a day. It never gets a day off ❤️" },
+      { keys: ["brain"], answer: "Your brain has around 86 billion neurons sending electrical signals. It uses about 20% of your energy 🧠" },
+      { keys: ["bone", "skeleton"], answer: "An adult human has 206 bones. Babies are born with about 300, some fuse together as you grow 🦴" },
+      { keys: ["oxygen"], answer: "Oxygen is the gas we need to breathe. It makes up about 21% of the air around you." },
+      { keys: ["electricity"], answer: "Electricity is the flow of electrons through a wire. Voltage pushes them, current is how many flow, resistance slows them down ⚡" },
+      { keys: ["magnet"], answer: "Magnets have a north and a south pole. Opposite poles attract, same poles push each other away 🧲" },
+      { keys: ["energy"], answer: "Energy can't be created or destroyed, it only changes form. Food becomes movement, electricity becomes light." },
+      { keys: ["evolution"], answer: "Evolution is how living things slowly change over many generations. The ones best suited to their environment survive and pass on their genes." },
+      { keys: ["periodic table"], answer: "The periodic table lists all 118 known chemical elements, sorted by how many protons they have." },
+      { keys: ["chemistry"], answer: "Chemistry is the science of what things are made of and how they react together 🧪" },
+      { keys: ["physics"], answer: "Physics is the science of how the universe works: forces, energy, motion, light and matter." },
+      { keys: ["biology"], answer: "Biology is the study of living things, from tiny cells all the way up to whole ecosystems 🌱" },
+
+      // ---------- maths ----------
+      { keys: ["what is pi", "pi"], answer: "Pi is about 3.14159. It's the circumference of a circle divided by its diameter, and the digits never end 🥧" },
+      { keys: ["area of a circle", "circle"], answer: "Area of a circle = pi × r². So a circle with radius 3 has an area of about 28.27." },
+      { keys: ["area of a rectangle", "rectangle"], answer: "Area of a rectangle = length × width. Easy one!" },
+      { keys: ["triangle"], answer: "Area of a triangle = (base × height) ÷ 2. And all three angles always add up to 180°." },
+      { keys: ["prime number", "prime"], answer: "A prime number can only be divided by 1 and itself. Like 2, 3, 5, 7, 11, 13. Fun fact: 2 is the only even prime." },
+      { keys: ["percentage", "percent"], answer: "A percentage is a part out of 100. To find 20% of 50, do 20 ÷ 100 × 50 = 10. You can just ask me, try '20% of 50'!" },
+      { keys: ["algebra"], answer: "Algebra is maths with letters standing in for unknown numbers. Like x + 3 = 7, so x must be 4." },
+      { keys: ["fraction"], answer: "A fraction is part of a whole, like 3/4. The bottom number says how many pieces, the top says how many you have 🍕" },
+      { keys: ["maths", "math", "mathematics"], answer: "Maths is the language of patterns and numbers. Everything from your phone to space rockets runs on it. Ask me a sum and I'll solve it!" },
+
+      // ---------- geography ----------
       { keys: ["capital of egypt"], answer: "The capital of Egypt is Cairo 🇪🇬" },
       { keys: ["capital of france"], answer: "The capital of France is Paris 🇫🇷" },
-      { keys: ["capital of uk", "capital of england"], answer: "The capital of the UK is London 🇬🇧" },
+      { keys: ["capital of uk", "capital of england", "capital of britain"], answer: "The capital of the UK is London 🇬🇧" },
       { keys: ["capital of usa", "capital of america"], answer: "The capital of the USA is Washington D.C. 🇺🇸" },
       { keys: ["capital of japan"], answer: "The capital of Japan is Tokyo 🇯🇵" },
+      { keys: ["capital of italy"], answer: "The capital of Italy is Rome 🇮🇹" },
+      { keys: ["capital of spain"], answer: "The capital of Spain is Madrid 🇪🇸" },
+      { keys: ["capital of germany"], answer: "The capital of Germany is Berlin 🇩🇪" },
+      { keys: ["capital of saudi"], answer: "The capital of Saudi Arabia is Riyadh 🇸🇦" },
+      { keys: ["capital of uae", "capital of emirates"], answer: "The capital of the UAE is Abu Dhabi 🇦🇪" },
+      { keys: ["capital of turkey"], answer: "The capital of Turkey is Ankara, not Istanbul! Common mistake 🇹🇷" },
+      { keys: ["capital of china"], answer: "The capital of China is Beijing 🇨🇳" },
+      { keys: ["capital of india"], answer: "The capital of India is New Delhi 🇮🇳" },
+      { keys: ["capital of canada"], answer: "The capital of Canada is Ottawa, not Toronto 🇨🇦" },
+      { keys: ["capital of australia"], answer: "The capital of Australia is Canberra, not Sydney 🇦🇺" },
+      { keys: ["capital of brazil"], answer: "The capital of Brazil is Brasilia 🇧🇷" },
+      { keys: ["capital of russia"], answer: "The capital of Russia is Moscow 🇷🇺" },
+      { keys: ["capital of morocco"], answer: "The capital of Morocco is Rabat 🇲🇦" },
+
+      { keys: ["how many countries"], answer: "There are 195 countries in the world, 193 of them are members of the United Nations 🌍" },
+      { keys: ["how many continents", "continent"], answer: "There are 7 continents: Africa, Asia, Europe, North America, South America, Australia and Antarctica." },
       { keys: ["biggest country", "largest country"], answer: "The biggest country in the world is Russia." },
-      { keys: ["tallest mountain", "highest mountain"], answer: "The tallest mountain is Mount Everest, about 8,849 metres high 🏔️" },
+      { keys: ["smallest country"], answer: "The smallest country is Vatican City, it's smaller than most towns!" },
+      { keys: ["longest river"], answer: "The longest river is the Nile, around 6,650 km. The Amazon is a close second." },
+      { keys: ["biggest ocean", "largest ocean"], answer: "The Pacific is the biggest ocean, it covers about a third of the planet 🌊" },
+      { keys: ["biggest desert", "largest desert"], answer: "The biggest hot desert is the Sahara. The biggest desert overall is actually Antarctica!" },
+      { keys: ["tallest mountain", "highest mountain", "everest"], answer: "The tallest mountain is Mount Everest, about 8,849 metres high 🏔️" },
+      { keys: ["pyramid"], answer: "The Great Pyramid of Giza is over 4,500 years old and was the tallest building on Earth for nearly 4,000 years." },
+      { keys: ["egypt"], answer: "Egypt is in North Africa, home of the pyramids and the river Nile, with over 100 million people 🇪🇬" },
 
-      // ---- random stuff ----
-      { keys: ["football", "soccer"],
-        answer: "Football is the most popular sport in the world! Messi and Ronaldo are probably the two biggest names ever ⚽" },
+      // ---------- fun ----------
+      { keys: ["football", "soccer"], answer: "Football is the most popular sport in the world, around 4 billion fans! ⚽" },
+      { keys: ["messi"], answer: "Messi has won 8 Ballon d'Ors and the World Cup in 2022. Absolute legend 🐐" },
+      { keys: ["ronaldo"], answer: "Cristiano Ronaldo is the all time top scorer in football with over 900 career goals 🐐" },
+      { keys: ["basketball"], answer: "Basketball was invented in 1891 by James Naismith, using a peach basket 🏀" },
+      { keys: ["minecraft"], answer: "Minecraft is the best selling video game ever, over 300 million copies ⛏️" },
+      { keys: ["video game", "gaming"], answer: "Gaming is huge, bigger than movies and music combined. Fun fact: most games are written in C++ or C# 🎮" },
+      { keys: ["music"], answer: "Music is just organised sound waves, but somehow it gives you goosebumps 🎵" },
 
-      { keys: ["thank", "thanks", "thx"],
-        answer: "You're welcome! Anytime 😊" },
-
-      { keys: ["bye", "goodbye", "see you"],
-        answer: "Bye! Come back whenever you want to chat 👋" }
+      // ---------- school ----------
+      { keys: ["exam", "test", "revision", "revise"],
+        answer: "Best exam tip: test yourself instead of re-reading notes. Past papers are the cheat code 📚" },
+      { keys: ["study", "how to study"],
+        answer: "Study in 25 minute blocks with 5 minute breaks, phone in another room. Way better than 3 distracted hours 📖" },
+      { keys: ["homework"], answer: "Do the hardest one first while your brain is fresh. The rest feels easy after that 💪" },
+      { keys: ["school"], answer: "School can be tough but the habits you build now matter more than the grades. Keep going 📘" }
     ];
 
     // ================================
@@ -234,56 +399,123 @@
       return list[Math.floor(Math.random() * list.length)];
     }
 
+    // squashes repeated letters so "hiii" becomes "hi"
+    function squash(text) {
+      return text.replace(/(.)\1+/g, "$1");
+    }
+
     // checks if a keyword is in the text as a WHOLE word
     // (so "hi" doesn't match inside "think")
     function matches(text, key) {
       // escape any special characters so the regex doesn't break
       var safeKey = key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      var pattern = new RegExp("\\b" + safeKey + "\\b");
-      return pattern.test(text);
+
+      // for normal words also accept the plural, so "loop" matches "loops"
+      if (key.length >= 4 && key.indexOf(" ") === -1) {
+        safeKey = safeKey + "s?";
+      }
+
+      return new RegExp("\\b" + safeKey + "\\b").test(text);
     }
 
     // puts a message bubble on the screen
-    function addMessage(text, who) {
+    function addMessage(text, who, extraClass) {
       var bubble = document.createElement("div");
-      bubble.className = "msg " + who;   // "user" or "bot"
+      bubble.className = "msg " + who + (extraClass ? " " + extraClass : "");
       bubble.textContent = text;
       chat.appendChild(bubble);
-      chat.scrollTop = chat.scrollHeight;  // scroll to the bottom
+      chat.scrollTop = chat.scrollHeight;   // scroll to the bottom
+      return bubble;
     }
 
-    // checks if the message looks like an idea / opinion
+    // checks if the message looks like an idea or an opinion
     function isIdea(text) {
-      var ideaWords = ["idea", "i think", "what if", "my plan", "should i", "i want to", "i made", "i built", "i created", "what do you think"];
+      var ideaWords = ["idea", "i think", "what if", "my plan", "should i", "i want to",
+                       "i made", "i built", "i created", "what do you think", "i am going to",
+                       "im going to", "i'm going to"];
       for (var i = 0; i < ideaWords.length; i++) {
-        if (text.includes(ideaWords[i])) {
-          return true;
-        }
+        if (text.indexOf(ideaWords[i]) !== -1) return true;
       }
       return false;
     }
 
-    // tries to do maths like "5 + 3" or "10 * 2"
-    function doMath(text) {
-      // only allow numbers and + - * / ( ) . so nothing weird runs
-      var clean = text.replace(/[^0-9+\-*/(). ]/g, "");
-      if (clean.trim() === "" || !/[+\-*/]/.test(clean)) {
-        return null;
+    // checks if the message looks like a question
+    function isQuestion(text) {
+      if (text.indexOf("?") !== -1) return true;
+      var questionWords = ["what", "why", "how", "who", "when", "where", "which",
+                           "is ", "are ", "can ", "do ", "does ", "tell me"];
+      for (var i = 0; i < questionWords.length; i++) {
+        if (text.indexOf(questionWords[i]) === 0) return true;
       }
+      return false;
+    }
+
+    // ================================
+    //  maths - understands symbols AND words
+    //  so "10 + 10" and "10 plus 10" both work
+    // ================================
+    function doMath(text) {
+      var sum = text;
+
+      // turn the words into maths symbols
+      sum = sum.replace(/\bplus\b|\badd\b|\badded to\b/g, "+");
+      sum = sum.replace(/\bminus\b|\btake away\b|\bsubtract\b/g, "-");
+      sum = sum.replace(/\btimes\b|\bmultiplied by\b|\bmultiply\b|\bx\b/g, "*");
+      sum = sum.replace(/\bdivided by\b|\bdivide\b|\bover\b/g, "/");
+
+      // "20% of 50"
+      var percent = sum.match(/(\d+(\.\d+)?)\s*%\s*of\s*(\d+(\.\d+)?)/);
+      if (percent) {
+        var part = (Number(percent[1]) / 100) * Number(percent[3]);
+        return percent[1] + "% of " + percent[3] + " is " + part + " 🧮";
+      }
+
+      // "square root of 16"
+      var root = sum.match(/square root of\s*(\d+(\.\d+)?)/);
+      if (root) {
+        return "The square root of " + root[1] + " is " + Math.sqrt(Number(root[1])) + " 🧮";
+      }
+
+      // keep only numbers and maths symbols so nothing weird can run
+      var clean = sum.replace(/[^0-9+\-*/(). ]/g, "");
+
+      // it needs two numbers and a symbol before it counts as a sum
+      var numbers = clean.match(/\d+(\.\d+)?/g);
+      if (!numbers || numbers.length < 2) return null;
+      if (!/[+\-*/]/.test(clean)) return null;
+
       try {
         var result = Function("return (" + clean + ")")();
-        if (isNaN(result)) return null;
-        return "The answer is " + result + " 🧮";
+        if (typeof result !== "number" || !isFinite(result)) return null;
+        result = Math.round(result * 10000) / 10000;   // tidy up long decimals
+        return "That's " + result + " 🧮";
       } catch (e) {
         return null;
       }
+    }
+
+    // looks through the brain for a matching keyword
+    // "loose" means squash repeated letters on both sides,
+    // so "helloo" can still find "hello"
+    function searchBrain(text, loose) {
+      for (var i = 0; i < brain.length; i++) {
+        for (var j = 0; j < brain[i].keys.length; j++) {
+          var key = loose ? squash(brain[i].keys[j]) : brain[i].keys[j];
+          if (matches(text, key)) {
+            var answer = brain[i].answer;
+            // some answers are functions (like the time), so run them
+            return typeof answer === "function" ? answer() : answer;
+          }
+        }
+      }
+      return null;
     }
 
     // ================================
     //  the main thinking part
     // ================================
     function getReply(userText) {
-      var text = userText.toLowerCase();
+      var text = userText.toLowerCase().trim();
       var reply = "";
 
       // 1. if it's an idea, praise it first
@@ -291,33 +523,31 @@
         reply += random(praise) + " ";
       }
 
-      // 2. check if it's a maths question
+      // 2. is it a sum?
       var mathAnswer = doMath(text);
-      if (mathAnswer) {
-        return reply + mathAnswer;
+      if (mathAnswer) return reply + mathAnswer;
+
+      // 3. normal keyword search
+      var found = searchBrain(text);
+
+      // 4. try again with repeated letters squashed, so "helloo" finds "hello"
+      if (found === null) {
+        found = searchBrain(squash(text), true);
       }
 
-      // 3. look through the brain for matching keywords
-      for (var i = 0; i < brain.length; i++) {
-        var item = brain[i];
-        for (var j = 0; j < item.keys.length; j++) {
-          if (matches(text, item.keys[j])) {
-            // some answers are functions (like the time), so run them
-            var answer = typeof item.answer === "function" ? item.answer() : item.answer;
-            // if we already praised them, skip the extra opener
-            var starter = reply === "" ? random(starters) : "";
-            return reply + starter + answer;
-          }
-        }
+      if (found !== null) {
+        // only add an opener if it's a question and we haven't praised already
+        var starter = (reply === "" && isQuestion(text)) ? random(starters) : "";
+        return reply + starter + found;
       }
 
-      // 4. if it was an idea but nothing matched, just keep the praise
+      // 5. it was an idea but nothing matched
       if (reply !== "") {
         return reply + "Tell me more about it, I'd love to hear the details!";
       }
 
-      // 5. nothing matched at all
-      return "Hmm, good question, but I don't know that one yet 😅 Try asking me about coding, science, geography or maths!";
+      // 6. no clue at all
+      return random(noClue) + " Try asking me about coding, science, maths, geography or school. I can do sums too, like 10 plus 10 🙂";
     }
 
     // ================================
@@ -331,8 +561,11 @@
       input.value = "";
       input.focus();
 
-      // wait a bit so it feels like the bot is "typing"
+      // show a little "typing..." bubble so it feels real
+      var typingBubble = addMessage("typing...", "bot", "typing");
+
       setTimeout(function() {
+        chat.removeChild(typingBubble);
         try {
           addMessage(getReply(userText), "bot");
         } catch (err) {
