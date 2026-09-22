@@ -59,7 +59,7 @@
     }
 
     /* the bottom part with the input box */
-    form {
+    #inputArea {
       display: flex;
       padding: 15px;
       background: #171717;
@@ -99,10 +99,14 @@
 
   <div id="chat"></div>
 
-  <form id="chatForm">
-    <input id="userInput" type="text" placeholder="Ask Elhadaba anything..." autocomplete="off">
-    <button type="submit">Send</button>
-  </form>
+  <div id="inputArea">
+    <input id="userInput" type="text" placeholder="Ask Elhadaba anything..." autocomplete="off" autofocus>
+    <button id="sendBtn" type="button">Send</button>
+  </div>
+
+  <noscript>
+    <p style="text-align:center">JavaScript is turned off, so Elhadaba can't reply. Turn it on and reload.</p>
+  </noscript>
 
   <script>
     // ================================
@@ -111,8 +115,8 @@
 
     // grab the stuff from the page
     var chat = document.getElementById("chat");
-    var form = document.getElementById("chatForm");
     var input = document.getElementById("userInput");
+    var sendBtn = document.getElementById("sendBtn");
 
     // random praise lines the bot says when you share an idea
     var praise = [
@@ -317,21 +321,36 @@
     }
 
     // ================================
-    //  when you press send
+    //  sending a message
     // ================================
-    form.addEventListener("submit", function(event) {
-      event.preventDefault();   // stop the page from refreshing
-
+    function sendMessage() {
       var userText = input.value.trim();
       if (userText === "") return;   // ignore empty messages
 
       addMessage(userText, "user");
       input.value = "";
+      input.focus();
 
       // wait a bit so it feels like the bot is "typing"
       setTimeout(function() {
-        addMessage(getReply(userText), "bot");
+        try {
+          addMessage(getReply(userText), "bot");
+        } catch (err) {
+          // if something breaks, show it instead of doing nothing
+          addMessage("Oops, something went wrong: " + err.message, "bot");
+        }
       }, 600);
+    }
+
+    // click the Send button
+    sendBtn.addEventListener("click", sendMessage);
+
+    // or just press Enter
+    input.addEventListener("keydown", function(event) {
+      if (event.key === "Enter" || event.keyCode === 13) {
+        event.preventDefault();
+        sendMessage();
+      }
     });
 
     // first message when the page opens

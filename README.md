@@ -4,9 +4,17 @@ A simple chatbot made with just HTML, CSS and JavaScript. No frameworks, no serv
 
 ## How to run it
 
-1. Download `elhadaba.html`
-2. Double click it (it opens in your browser)
-3. Start chatting!
+1. Download `elhadaba.html` (on GitHub open the file, then click the download button - do NOT copy the text off the page)
+2. Make sure the name still ends in `.html` and not `.html.txt`
+3. Double click it, it opens in your browser
+4. Type a message and press Enter or click Send
+
+## If nothing happens when you send
+
+- Check the file name really ends in `.html`
+- Open it in Chrome, Firefox, Edge or Safari, not in a text editor or Notepad
+- Viewing it on the GitHub website only shows the code, it does not run it
+- Press F12 and look at the Console tab, any red error there tells you what is wrong
 
 ## How it works
 
