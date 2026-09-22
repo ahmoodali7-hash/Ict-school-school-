@@ -124,6 +124,16 @@
     //  ELHADABA - a simple chatbot
     // ================================
 
+    // ================================
+    //  the intro chat at the start
+    //  step 1 = waiting for the name
+    //  step 2 = waiting for the favorite subject
+    //  step 0 = intro done, normal chat
+    // ================================
+    var step = 1;
+    var userName = "";          // this stores the user's answer
+    var favoriteSubject = "";
+
     // grab the stuff from the page
     var chat = document.getElementById("chat");
     var input = document.getElementById("userInput");
@@ -716,15 +726,68 @@
     }
 
     // ================================
+    //  the intro questions
+    // ================================
+    function doIntro(userText) {
+
+      // STEP 3: store whatever they typed as their name
+      if (step === 1) {
+        // if they typed a whole sentence, just take the name part
+        var name = userText.replace(/my name is/i, "")
+                           .replace(/i am/i, "")
+                           .replace(/i'm/i, "")
+                           .replace(/call me/i, "")
+                           .trim();
+        userName = capitalise(name);
+        step = 2;
+
+        // STEP 4 and STEP 5
+        return "Nice to meet you, " + userName + "! \nWhat is your favorite subject?";
+      }
+
+      // STEP 6: if / else on the subject they gave
+      if (step === 2) {
+        favoriteSubject = userText;
+        step = 0;   // intro finished, normal chat from now on
+
+        var subject = userText.toLowerCase();
+        var answer;
+
+        if (matches(subject, "ict") || matches(subject, "computing") || matches(subject, "computer science")) {
+          answer = "Great choice! I love technology too!";
+        } else if (matches(subject, "math") || matches(subject, "mathematics")) {
+          answer = "Awesome! I like solving problems!";
+        } else {
+          answer = "That sounds interesting!";
+        }
+
+        return answer + "\nNow ask me anything you want, " + userName + " 🙂";
+      }
+
+      // intro is over, so let the normal chatbot take it
+      return null;
+    }
+
+    // ================================
     //  the main thinking part
     // ================================
     function getReply(userText) {
+
+      // the intro questions come first
+      var intro = doIntro(userText);
+      if (intro !== null) return intro;
+
       var text = userText.toLowerCase().trim();
       var reply = "";
 
       // 1. if it's an idea, praise it first
       if (isIdea(text)) {
         reply += random(praise) + " ";
+      }
+
+      // they can ask their own name back, because we stored it
+      if (text.indexOf("my name") !== -1 && userName !== "") {
+        return "Your name is " + userName + "! You told me at the start 😄";
       }
 
       // 2. is it a sum?
@@ -797,8 +860,8 @@
       }
     });
 
-    // first message when the page opens
-    addMessage("Hey! I'm Elhadaba 🤖 Ask me anything or tell me your ideas!", "bot");
+    // STEP 2: the first message when the page opens
+    addMessage("Hi! I'm Elhadaba, your chatbot. What is your name?", "bot");
   </script>
 </body>
 </html>

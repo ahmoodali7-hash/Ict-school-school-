@@ -16,6 +16,35 @@ A simple chatbot made with just HTML, CSS and JavaScript. No frameworks, no serv
 - Viewing it on the GitHub website only shows the code, it does not run it
 - Press F12 and look at the Console tab, any red error there tells you what is wrong
 
+## The assignment steps
+
+When you open it, Elhadaba runs through the task steps first:
+
+1. It is a chatbot, and it is called Elhadaba
+2. It says "Hi! I'm Elhadaba, your chatbot. What is your name?"
+3. It stores your answer in the `userName` variable
+4. It says "Nice to meet you!"
+5. It asks "What is your favorite subject?"
+6. It uses if/else to reply differently:
+   - ICT gets "Great choice! I love technology too!"
+   - Math gets "Awesome! I like solving problems!"
+   - anything else gets "That sounds interesting!"
+
+The if/else part is this:
+
+```js
+if (matches(subject, "ict")) {
+  answer = "Great choice! I love technology too!";
+} else if (matches(subject, "math")) {
+  answer = "Awesome! I like solving problems!";
+} else {
+  answer = "That sounds interesting!";
+}
+```
+
+After that the intro is finished and you can chat normally about anything
+below. Because your name is stored, you can also ask it "what is my name".
+
 ## How it works
 
 - Everything is in one file: `elhadaba.html`
