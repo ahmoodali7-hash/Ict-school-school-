@@ -342,35 +342,24 @@
       { keys: ["maths", "math", "mathematics"], answer: "Maths is the language of patterns and numbers. Everything from your phone to space rockets runs on it. Ask me a sum and I'll solve it!" },
 
       // ---------- geography ----------
-      { keys: ["capital of egypt"], answer: "The capital of Egypt is Cairo 🇪🇬" },
-      { keys: ["capital of france"], answer: "The capital of France is Paris 🇫🇷" },
-      { keys: ["capital of uk", "capital of england", "capital of britain"], answer: "The capital of the UK is London 🇬🇧" },
-      { keys: ["capital of usa", "capital of america"], answer: "The capital of the USA is Washington D.C. 🇺🇸" },
-      { keys: ["capital of japan"], answer: "The capital of Japan is Tokyo 🇯🇵" },
-      { keys: ["capital of italy"], answer: "The capital of Italy is Rome 🇮🇹" },
-      { keys: ["capital of spain"], answer: "The capital of Spain is Madrid 🇪🇸" },
-      { keys: ["capital of germany"], answer: "The capital of Germany is Berlin 🇩🇪" },
-      { keys: ["capital of saudi"], answer: "The capital of Saudi Arabia is Riyadh 🇸🇦" },
-      { keys: ["capital of uae", "capital of emirates"], answer: "The capital of the UAE is Abu Dhabi 🇦🇪" },
-      { keys: ["capital of turkey"], answer: "The capital of Turkey is Ankara, not Istanbul! Common mistake 🇹🇷" },
-      { keys: ["capital of china"], answer: "The capital of China is Beijing 🇨🇳" },
-      { keys: ["capital of india"], answer: "The capital of India is New Delhi 🇮🇳" },
-      { keys: ["capital of canada"], answer: "The capital of Canada is Ottawa, not Toronto 🇨🇦" },
-      { keys: ["capital of australia"], answer: "The capital of Australia is Canberra, not Sydney 🇦🇺" },
-      { keys: ["capital of brazil"], answer: "The capital of Brazil is Brasilia 🇧🇷" },
-      { keys: ["capital of russia"], answer: "The capital of Russia is Moscow 🇷🇺" },
-      { keys: ["capital of morocco"], answer: "The capital of Morocco is Rabat 🇲🇦" },
+      { keys: ["africa"], answer: "Africa is the second biggest continent, 54 countries and over 1.4 billion people. The Sahara and the Nile are both there 🌍" },
+      { keys: ["asia"], answer: "Asia is the biggest continent and has around 60% of all the people on Earth, about 4.8 billion." },
+      { keys: ["europe"], answer: "Europe has about 44 countries. 27 of them are in the European Union and most of those share the Euro." },
+      { keys: ["north america"], answer: "North America has 23 countries. The biggest are Canada, the USA and Mexico." },
+      { keys: ["south america"], answer: "South America has 12 countries. Brazil is the biggest, and the Amazon rainforest covers a huge part of it." },
+      { keys: ["antarctica"], answer: "Antarctica has no countries and no permanent people, only scientists. It is the coldest place on Earth 🧊" },
 
       { keys: ["how many countries"], answer: "There are 195 countries in the world, 193 of them are members of the United Nations 🌍" },
       { keys: ["how many continents", "continent"], answer: "There are 7 continents: Africa, Asia, Europe, North America, South America, Australia and Antarctica." },
-      { keys: ["biggest country", "largest country"], answer: "The biggest country in the world is Russia." },
-      { keys: ["smallest country"], answer: "The smallest country is Vatican City, it's smaller than most towns!" },
-      { keys: ["longest river"], answer: "The longest river is the Nile, around 6,650 km. The Amazon is a close second." },
+      { keys: ["biggest country", "largest country"], answer: "Russia is the biggest country in the world, almost twice the size of the next one." },
+      { keys: ["smallest country"], answer: "Vatican City is the smallest country, smaller than most towns!" },
+      { keys: ["longest river"], answer: "The Nile is the longest river, around 6,650 km. The Amazon is a close second." },
       { keys: ["biggest ocean", "largest ocean"], answer: "The Pacific is the biggest ocean, it covers about a third of the planet 🌊" },
       { keys: ["biggest desert", "largest desert"], answer: "The biggest hot desert is the Sahara. The biggest desert overall is actually Antarctica!" },
-      { keys: ["tallest mountain", "highest mountain", "everest"], answer: "The tallest mountain is Mount Everest, about 8,849 metres high 🏔️" },
+      { keys: ["tallest mountain", "highest mountain", "everest"], answer: "Mount Everest is the tallest mountain, about 8,849 metres high 🏔️" },
+      { keys: ["biggest city", "largest city"], answer: "Tokyo is the biggest city in the world, around 37 million people in the wider area." },
       { keys: ["pyramid"], answer: "The Great Pyramid of Giza is over 4,500 years old and was the tallest building on Earth for nearly 4,000 years." },
-      { keys: ["egypt"], answer: "Egypt is in North Africa, home of the pyramids and the river Nile, with over 100 million people 🇪🇬" },
+
 
       // ---------- fun ----------
       { keys: ["football", "soccer"], answer: "Football is the most popular sport in the world, around 4 billion fans! ⚽" },
@@ -388,6 +377,147 @@
         answer: "Study in 25 minute blocks with 5 minute breaks, phone in another room. Way better than 3 distracted hours 📖" },
       { keys: ["homework"], answer: "Do the hardest one first while your brain is fresh. The rest feels easy after that 💪" },
       { keys: ["school"], answer: "School can be tough but the habits you build now matter more than the grades. Keep going 📘" }
+    ];
+
+    // ================================
+    //  COUNTRIES
+    //  one line each, so it's easy to add more
+    // ================================
+    var countries = [
+      // ---- Africa ----
+      { names: ["egypt"], title: "Egypt", capital: "Cairo", continent: "Africa", people: "about 110 million", money: "Egyptian Pound", language: "Arabic", flag: "🇪🇬", fact: "It has the Pyramids of Giza and the Nile, the longest river in the world" },
+      { names: ["nigeria"], title: "Nigeria", capital: "Abuja", continent: "Africa", people: "about 230 million", money: "Naira", language: "English", flag: "🇳🇬", fact: "It has more people than any other country in Africa" },
+      { names: ["south africa"], title: "South Africa", capital: "Pretoria", continent: "Africa", people: "about 62 million", money: "Rand", language: "11 official languages including Zulu and English", flag: "🇿🇦", fact: "It is the only country in the world with three capital cities" },
+      { names: ["kenya"], title: "Kenya", capital: "Nairobi", continent: "Africa", people: "about 55 million", money: "Kenyan Shilling", language: "Swahili and English", flag: "🇰🇪", fact: "It is famous for safaris and for producing some of the best long distance runners ever" },
+      { names: ["morocco"], title: "Morocco", capital: "Rabat", continent: "Africa", people: "about 38 million", money: "Moroccan Dirham", language: "Arabic and Berber", flag: "🇲🇦", fact: "In 2022 it became the first African team to reach a World Cup semi final" },
+      { names: ["algeria"], title: "Algeria", capital: "Algiers", continent: "Africa", people: "about 46 million", money: "Algerian Dinar", language: "Arabic and Berber", flag: "🇩🇿", fact: "It is the largest country in Africa by land area" },
+      { names: ["tunisia"], title: "Tunisia", capital: "Tunis", continent: "Africa", people: "about 12 million", money: "Tunisian Dinar", language: "Arabic", flag: "🇹🇳", fact: "Parts of Star Wars were filmed in its desert" },
+      { names: ["libya"], title: "Libya", capital: "Tripoli", continent: "Africa", people: "about 7 million", money: "Libyan Dinar", language: "Arabic", flag: "🇱🇾", fact: "Around 90% of the country is desert" },
+      { names: ["sudan"], title: "Sudan", capital: "Khartoum", continent: "Africa", people: "about 48 million", money: "Sudanese Pound", language: "Arabic and English", flag: "🇸🇩", fact: "It has more pyramids than Egypt, over 200 of them" },
+      { names: ["ethiopia"], title: "Ethiopia", capital: "Addis Ababa", continent: "Africa", people: "about 128 million", money: "Birr", language: "Amharic", flag: "🇪🇹", fact: "It uses its own calendar and is around 7 years behind the one most countries use" },
+      { names: ["ghana"], title: "Ghana", capital: "Accra", continent: "Africa", people: "about 34 million", money: "Cedi", language: "English", flag: "🇬🇭", fact: "It was the first country in sub Saharan Africa to gain independence, in 1957" },
+
+      // ---- Middle East ----
+      { names: ["saudi arabia", "saudi", "ksa"], title: "Saudi Arabia", capital: "Riyadh", continent: "Asia", people: "about 35 million", money: "Saudi Riyal", language: "Arabic", flag: "🇸🇦", fact: "Mecca and Medina, the two holiest cities in Islam, are both there" },
+      { names: ["uae", "emirates", "united arab emirates"], title: "the UAE", capital: "Abu Dhabi", continent: "Asia", people: "about 10 million", money: "UAE Dirham", language: "Arabic", flag: "🇦🇪", fact: "The Burj Khalifa in Dubai is the tallest building in the world at 828 metres" },
+      { names: ["qatar"], title: "Qatar", capital: "Doha", continent: "Asia", people: "about 3 million", money: "Qatari Riyal", language: "Arabic", flag: "🇶🇦", fact: "It hosted the 2022 World Cup, the first ever held in the Middle East" },
+      { names: ["kuwait"], title: "Kuwait", capital: "Kuwait City", continent: "Asia", people: "about 4.5 million", money: "Kuwaiti Dinar", language: "Arabic", flag: "🇰🇼", fact: "The Kuwaiti Dinar is the highest valued currency in the world" },
+      { names: ["oman"], title: "Oman", capital: "Muscat", continent: "Asia", people: "about 5 million", money: "Omani Rial", language: "Arabic", flag: "🇴🇲", fact: "It is the oldest independent state in the Arab world" },
+      { names: ["bahrain"], title: "Bahrain", capital: "Manama", continent: "Asia", people: "about 1.5 million", money: "Bahraini Dinar", language: "Arabic", flag: "🇧🇭", fact: "It is an island country made up of around 50 natural islands" },
+      { names: ["jordan"], title: "Jordan", capital: "Amman", continent: "Asia", people: "about 11 million", money: "Jordanian Dinar", language: "Arabic", flag: "🇯🇴", fact: "Petra, a whole city carved into rock, is one of the New Seven Wonders of the World" },
+      { names: ["lebanon"], title: "Lebanon", capital: "Beirut", continent: "Asia", people: "about 5.5 million", money: "Lebanese Pound", language: "Arabic", flag: "🇱🇧", fact: "The cedar tree on its flag has been a symbol there for thousands of years" },
+      { names: ["iraq"], title: "Iraq", capital: "Baghdad", continent: "Asia", people: "about 45 million", money: "Iraqi Dinar", language: "Arabic and Kurdish", flag: "🇮🇶", fact: "Ancient Mesopotamia, where writing was invented, was there" },
+      { names: ["syria"], title: "Syria", capital: "Damascus", continent: "Asia", people: "about 23 million", money: "Syrian Pound", language: "Arabic", flag: "🇸🇾", fact: "Damascus is one of the oldest continuously lived in cities on Earth" },
+      { names: ["yemen"], title: "Yemen", capital: "Sanaa", continent: "Asia", people: "about 34 million", money: "Yemeni Rial", language: "Arabic", flag: "🇾🇪", fact: "Its old city of Sanaa has tower houses built over 1,000 years ago" },
+      { names: ["palestine"], title: "Palestine", capital: "Ramallah", continent: "Asia", people: "about 5.5 million", money: "Israeli Shekel and Jordanian Dinar", language: "Arabic", flag: "🇵🇸", fact: "Jerusalem is also claimed as its capital. Jericho, in the West Bank, is one of the oldest cities in the world" },
+      { names: ["israel"], title: "Israel", capital: "Jerusalem", continent: "Asia", people: "about 9.8 million", money: "Shekel", language: "Hebrew and Arabic", flag: "🇮🇱", fact: "Most countries keep their embassies in Tel Aviv. The Dead Sea on its border is the lowest point on land anywhere on Earth" },
+      { names: ["turkey"], title: "Turkey", capital: "Ankara", continent: "Europe and Asia", people: "about 85 million", money: "Turkish Lira", language: "Turkish", flag: "🇹🇷", fact: "Istanbul is the only major city that sits on two continents at once" },
+      { names: ["iran"], title: "Iran", capital: "Tehran", continent: "Asia", people: "about 89 million", money: "Iranian Rial", language: "Persian", flag: "🇮🇷", fact: "It was called Persia until 1935" },
+
+      // ---- Asia ----
+      { names: ["china"], title: "China", capital: "Beijing", continent: "Asia", people: "about 1.4 billion", money: "Yuan", language: "Mandarin Chinese", flag: "🇨🇳", fact: "The Great Wall stretches over 21,000 km, though you cannot actually see it from space" },
+      { names: ["japan"], title: "Japan", capital: "Tokyo", continent: "Asia", people: "about 124 million", money: "Yen", language: "Japanese", flag: "🇯🇵", fact: "It is made of around 14,000 islands and sits on four tectonic plates" },
+      { names: ["india"], title: "India", capital: "New Delhi", continent: "Asia", people: "about 1.43 billion", money: "Rupee", language: "Hindi and English plus 20 more official languages", flag: "🇮🇳", fact: "It has more people than any other country in the world" },
+      { names: ["pakistan"], title: "Pakistan", capital: "Islamabad", continent: "Asia", people: "about 240 million", money: "Pakistani Rupee", language: "Urdu and English", flag: "🇵🇰", fact: "K2, the second highest mountain on Earth, is on its border" },
+      { names: ["bangladesh"], title: "Bangladesh", capital: "Dhaka", continent: "Asia", people: "about 173 million", money: "Taka", language: "Bengali", flag: "🇧🇩", fact: "It has the largest river delta in the world" },
+      { names: ["indonesia"], title: "Indonesia", capital: "Jakarta", continent: "Asia", people: "about 280 million", money: "Rupiah", language: "Indonesian", flag: "🇮🇩", fact: "It is spread across more than 17,000 islands" },
+      { names: ["south korea", "korea"], title: "South Korea", capital: "Seoul", continent: "Asia", people: "about 52 million", money: "Won", language: "Korean", flag: "🇰🇷", fact: "It has some of the fastest internet in the world, and K pop started there" },
+      { names: ["north korea"], title: "North Korea", capital: "Pyongyang", continent: "Asia", people: "about 26 million", money: "North Korean Won", language: "Korean", flag: "🇰🇵", fact: "It is one of the most closed off countries in the world" },
+      { names: ["thailand"], title: "Thailand", capital: "Bangkok", continent: "Asia", people: "about 72 million", money: "Baht", language: "Thai", flag: "🇹🇭", fact: "It is the only country in Southeast Asia never colonised by Europe" },
+      { names: ["vietnam"], title: "Vietnam", capital: "Hanoi", continent: "Asia", people: "about 100 million", money: "Dong", language: "Vietnamese", flag: "🇻🇳", fact: "It is the second biggest coffee exporter in the world" },
+      { names: ["philippines"], title: "the Philippines", capital: "Manila", continent: "Asia", people: "about 117 million", money: "Philippine Peso", language: "Filipino and English", flag: "🇵🇭", fact: "It is made up of over 7,600 islands" },
+      { names: ["malaysia"], title: "Malaysia", capital: "Kuala Lumpur", continent: "Asia", people: "about 34 million", money: "Ringgit", language: "Malay", flag: "🇲🇾", fact: "The Petronas Towers were the tallest buildings in the world until 2004" },
+      { names: ["singapore"], title: "Singapore", capital: "Singapore itself", continent: "Asia", people: "about 6 million", money: "Singapore Dollar", language: "English, Malay, Mandarin and Tamil", flag: "🇸🇬", fact: "It is one of only three city states left in the world" },
+
+      // ---- Europe ----
+      { names: ["uk", "united kingdom", "britain", "great britain", "england"], title: "the UK", capital: "London", continent: "Europe", people: "about 68 million", money: "Pound Sterling", language: "English", flag: "🇬🇧", fact: "It is made up of England, Scotland, Wales and Northern Ireland" },
+      { names: ["france"], title: "France", capital: "Paris", continent: "Europe", people: "about 68 million", money: "Euro", language: "French", flag: "🇫🇷", fact: "It is the most visited country in the world, around 100 million tourists a year" },
+      { names: ["germany"], title: "Germany", capital: "Berlin", continent: "Europe", people: "about 84 million", money: "Euro", language: "German", flag: "🇩🇪", fact: "It has the biggest economy in Europe" },
+      { names: ["italy"], title: "Italy", capital: "Rome", continent: "Europe", people: "about 59 million", money: "Euro", language: "Italian", flag: "🇮🇹", fact: "It has two whole countries inside it, Vatican City and San Marino" },
+      { names: ["spain"], title: "Spain", capital: "Madrid", continent: "Europe", people: "about 48 million", money: "Euro", language: "Spanish", flag: "🇪🇸", fact: "Spanish is the second most spoken first language in the world after Chinese" },
+      { names: ["portugal"], title: "Portugal", capital: "Lisbon", continent: "Europe", people: "about 10 million", money: "Euro", language: "Portuguese", flag: "🇵🇹", fact: "It has the oldest borders in Europe, basically unchanged since 1297" },
+      { names: ["netherlands", "holland"], title: "the Netherlands", capital: "Amsterdam", continent: "Europe", people: "about 18 million", money: "Euro", language: "Dutch", flag: "🇳🇱", fact: "Around a quarter of the country is below sea level" },
+      { names: ["belgium"], title: "Belgium", capital: "Brussels", continent: "Europe", people: "about 12 million", money: "Euro", language: "Dutch, French and German", flag: "🇧🇪", fact: "Brussels is the headquarters of the European Union" },
+      { names: ["switzerland"], title: "Switzerland", capital: "Bern", continent: "Europe", people: "about 9 million", money: "Swiss Franc", language: "German, French, Italian and Romansh", flag: "🇨🇭", fact: "It has stayed neutral in wars for over 200 years" },
+      { names: ["sweden"], title: "Sweden", capital: "Stockholm", continent: "Europe", people: "about 10.5 million", money: "Swedish Krona", language: "Swedish", flag: "🇸🇪", fact: "Minecraft and Spotify were both created there" },
+      { names: ["norway"], title: "Norway", capital: "Oslo", continent: "Europe", people: "about 5.5 million", money: "Norwegian Krone", language: "Norwegian", flag: "🇳🇴", fact: "In the far north the sun does not set at all for weeks in summer" },
+      { names: ["denmark"], title: "Denmark", capital: "Copenhagen", continent: "Europe", people: "about 6 million", money: "Danish Krone", language: "Danish", flag: "🇩🇰", fact: "Lego was invented there in 1932" },
+      { names: ["poland"], title: "Poland", capital: "Warsaw", continent: "Europe", people: "about 37 million", money: "Zloty", language: "Polish", flag: "🇵🇱", fact: "It has one of the oldest salt mines in the world, with chapels carved out of salt" },
+      { names: ["greece"], title: "Greece", capital: "Athens", continent: "Europe", people: "about 10 million", money: "Euro", language: "Greek", flag: "🇬🇷", fact: "Democracy and the Olympic Games both started there" },
+      { names: ["russia"], title: "Russia", capital: "Moscow", continent: "Europe and Asia", people: "about 144 million", money: "Ruble", language: "Russian", flag: "🇷🇺", fact: "It is the biggest country on Earth and spans 11 time zones" },
+      { names: ["ukraine"], title: "Ukraine", capital: "Kyiv", continent: "Europe", people: "about 38 million", money: "Hryvnia", language: "Ukrainian", flag: "🇺🇦", fact: "It is the biggest country entirely inside Europe" },
+      { names: ["ireland"], title: "Ireland", capital: "Dublin", continent: "Europe", people: "about 5 million", money: "Euro", language: "English and Irish", flag: "🇮🇪", fact: "There are no wild snakes anywhere on the island" },
+      { names: ["austria"], title: "Austria", capital: "Vienna", continent: "Europe", people: "about 9 million", money: "Euro", language: "German", flag: "🇦🇹", fact: "Mozart was born there, and so was the croissant story" },
+
+      // ---- Americas ----
+      { names: ["usa", "america", "united states"], title: "the USA", capital: "Washington D.C.", continent: "North America", people: "about 335 million", money: "US Dollar", language: "English", flag: "🇺🇸", fact: "It has 50 states and the biggest economy in the world" },
+      { names: ["canada"], title: "Canada", capital: "Ottawa", continent: "North America", people: "about 40 million", money: "Canadian Dollar", language: "English and French", flag: "🇨🇦", fact: "It has more lakes than the rest of the world combined" },
+      { names: ["mexico"], title: "Mexico", capital: "Mexico City", continent: "North America", people: "about 130 million", money: "Mexican Peso", language: "Spanish", flag: "🇲🇽", fact: "Chocolate, chilli and corn all came from there originally" },
+      { names: ["brazil"], title: "Brazil", capital: "Brasilia", continent: "South America", people: "about 216 million", money: "Real", language: "Portuguese", flag: "🇧🇷", fact: "It has won the football World Cup 5 times, more than anyone else" },
+      { names: ["argentina"], title: "Argentina", capital: "Buenos Aires", continent: "South America", people: "about 46 million", money: "Argentine Peso", language: "Spanish", flag: "🇦🇷", fact: "Messi is from there, and they won the 2022 World Cup" },
+      { names: ["chile"], title: "Chile", capital: "Santiago", continent: "South America", people: "about 20 million", money: "Chilean Peso", language: "Spanish", flag: "🇨🇱", fact: "It is over 4,000 km long but only about 180 km wide on average" },
+      { names: ["colombia"], title: "Colombia", capital: "Bogota", continent: "South America", people: "about 52 million", money: "Colombian Peso", language: "Spanish", flag: "🇨🇴", fact: "It is the only South American country with coastline on both the Atlantic and Pacific" },
+      { names: ["peru"], title: "Peru", capital: "Lima", continent: "South America", people: "about 34 million", money: "Sol", language: "Spanish and Quechua", flag: "🇵🇪", fact: "Machu Picchu, the ancient Inca city in the mountains, is there" },
+
+      // ---- Oceania ----
+      { names: ["australia"], title: "Australia", capital: "Canberra", continent: "Oceania", people: "about 27 million", money: "Australian Dollar", language: "English", flag: "🇦🇺", fact: "It is a country and a continent at the same time, and the Great Barrier Reef is there" },
+      { names: ["new zealand"], title: "New Zealand", capital: "Wellington", continent: "Oceania", people: "about 5 million", money: "New Zealand Dollar", language: "English and Maori", flag: "🇳🇿", fact: "There are roughly 5 sheep for every person living there" }
+    ];
+
+    // ================================
+    //  CITIES
+    // ================================
+    var cities = [
+      { names: ["cairo"], title: "Cairo", country: "Egypt", flag: "🇪🇬", fact: "It is the biggest city in the Arab world, with over 20 million people in the wider area" },
+      { names: ["alexandria"], title: "Alexandria", country: "Egypt", flag: "🇪🇬", fact: "It was founded by Alexander the Great and had one of the ancient world's greatest libraries" },
+      { names: ["giza"], title: "Giza", country: "Egypt", flag: "🇪🇬", fact: "The Great Pyramid and the Sphinx are there" },
+      { names: ["london"], title: "London", country: "the UK", flag: "🇬🇧", fact: "It has the oldest underground railway in the world, opened in 1863" },
+      { names: ["paris"], title: "Paris", country: "France", flag: "🇫🇷", fact: "The Eiffel Tower was meant to be temporary and almost got torn down in 1909" },
+      { names: ["new york"], title: "New York", country: "the USA", flag: "🇺🇸", fact: "Over 800 languages are spoken there, more than any city on Earth" },
+      { names: ["los angeles"], title: "Los Angeles", country: "the USA", flag: "🇺🇸", fact: "Hollywood is there, and it makes most of the world's biggest films" },
+      { names: ["chicago"], title: "Chicago", country: "the USA", flag: "🇺🇸", fact: "The world's first skyscraper was built there in 1885" },
+      { names: ["san francisco"], title: "San Francisco", country: "the USA", flag: "🇺🇸", fact: "Silicon Valley is next door, where most big tech companies started" },
+      { names: ["las vegas"], title: "Las Vegas", country: "the USA", flag: "🇺🇸", fact: "It was built in the middle of the Mojave Desert" },
+      { names: ["washington"], title: "Washington D.C.", country: "the USA", flag: "🇺🇸", fact: "It is not part of any state, it is its own district" },
+      { names: ["tokyo"], title: "Tokyo", country: "Japan", flag: "🇯🇵", fact: "It is the biggest city in the world, around 37 million people in the wider area" },
+      { names: ["dubai"], title: "Dubai", country: "the UAE", flag: "🇦🇪", fact: "The Burj Khalifa there is the tallest building in the world at 828 metres" },
+      { names: ["abu dhabi"], title: "Abu Dhabi", country: "the UAE", flag: "🇦🇪", fact: "It is the capital of the UAE, and much bigger in area than Dubai" },
+      { names: ["rome"], title: "Rome", country: "Italy", flag: "🇮🇹", fact: "The Colosseum could hold around 50,000 people nearly 2,000 years ago" },
+      { names: ["venice"], title: "Venice", country: "Italy", flag: "🇮🇹", fact: "It is built on 118 small islands and has canals instead of roads" },
+      { names: ["madrid"], title: "Madrid", country: "Spain", flag: "🇪🇸", fact: "It is the highest capital city in Europe, 650 metres above sea level" },
+      { names: ["barcelona"], title: "Barcelona", country: "Spain", flag: "🇪🇸", fact: "The Sagrada Familia church has been under construction since 1882 and is still not finished" },
+      { names: ["berlin"], title: "Berlin", country: "Germany", flag: "🇩🇪", fact: "A wall split the city in two from 1961 until 1989" },
+      { names: ["moscow"], title: "Moscow", country: "Russia", flag: "🇷🇺", fact: "Its metro stations look like palaces, with chandeliers and marble" },
+      { names: ["istanbul"], title: "Istanbul", country: "Turkey", flag: "🇹🇷", fact: "It is the only big city in the world sitting on two continents" },
+      { names: ["mecca", "makkah"], title: "Mecca", country: "Saudi Arabia", flag: "🇸🇦", fact: "It is the holiest city in Islam and millions travel there for Hajj every year" },
+      { names: ["medina"], title: "Medina", country: "Saudi Arabia", flag: "🇸🇦", fact: "It is the second holiest city in Islam" },
+      { names: ["riyadh"], title: "Riyadh", country: "Saudi Arabia", flag: "🇸🇦", fact: "Its name comes from an Arabic word meaning gardens" },
+      { names: ["doha"], title: "Doha", country: "Qatar", flag: "🇶🇦", fact: "It hosted the 2022 World Cup final" },
+      { names: ["kuwait city"], title: "Kuwait City", country: "Kuwait", flag: "🇰🇼", fact: "Its water towers are the symbol of the city" },
+      { names: ["amman"], title: "Amman", country: "Jordan", flag: "🇯🇴", fact: "It was originally built on seven hills, like Rome" },
+      { names: ["beirut"], title: "Beirut", country: "Lebanon", flag: "🇱🇧", fact: "It has been destroyed and rebuilt at least seven times in its history" },
+      { names: ["baghdad"], title: "Baghdad", country: "Iraq", flag: "🇮🇶", fact: "1,000 years ago it was the biggest city in the world and a centre of science" },
+      { names: ["jerusalem"], title: "Jerusalem", country: "the Middle East", flag: "🕌", fact: "It is holy to Judaism, Christianity and Islam, and both Israel and Palestine claim it as their capital. Its old city is only about 1 square kilometre" },
+      { names: ["beijing"], title: "Beijing", country: "China", flag: "🇨🇳", fact: "The Forbidden City there has nearly 1,000 buildings" },
+      { names: ["shanghai"], title: "Shanghai", country: "China", flag: "🇨🇳", fact: "It has the busiest container port in the world" },
+      { names: ["hong kong"], title: "Hong Kong", country: "China", flag: "🇭🇰", fact: "It has more skyscrapers than any other city on Earth" },
+      { names: ["delhi", "new delhi"], title: "Delhi", country: "India", flag: "🇮🇳", fact: "It has been the capital of many different empires over 1,000 years" },
+      { names: ["mumbai"], title: "Mumbai", country: "India", flag: "🇮🇳", fact: "Bollywood is based there and makes more films a year than Hollywood" },
+      { names: ["seoul"], title: "Seoul", country: "South Korea", flag: "🇰🇷", fact: "Around half of everyone in South Korea lives in or around it" },
+      { names: ["bangkok"], title: "Bangkok", country: "Thailand", flag: "🇹🇭", fact: "Its full ceremonial name is the longest city name in the world" },
+      { names: ["sydney"], title: "Sydney", country: "Australia", flag: "🇦🇺", fact: "The Opera House roof is covered in over one million tiles" },
+      { names: ["toronto"], title: "Toronto", country: "Canada", flag: "🇨🇦", fact: "It is one of the most multicultural cities in the world, about half its people were born abroad" },
+      { names: ["mexico city"], title: "Mexico City", country: "Mexico", flag: "🇲🇽", fact: "It was built on a lake and is slowly sinking, around 50 cm a year in places" },
+      { names: ["rio de janeiro", "rio"], title: "Rio de Janeiro", country: "Brazil", flag: "🇧🇷", fact: "The Christ the Redeemer statue stands 30 metres tall on a mountain above it" },
+      { names: ["sao paulo"], title: "Sao Paulo", country: "Brazil", flag: "🇧🇷", fact: "It is the biggest city in the southern half of the world" },
+      { names: ["cape town"], title: "Cape Town", country: "South Africa", flag: "🇿🇦", fact: "Table Mountain above it has a flat top and its own cloud, called the tablecloth" },
+      { names: ["nairobi"], title: "Nairobi", country: "Kenya", flag: "🇰🇪", fact: "It is the only capital city in the world with a national park inside it" },
+      { names: ["lagos"], title: "Lagos", country: "Nigeria", flag: "🇳🇬", fact: "It is one of the fastest growing cities in the world" },
+      { names: ["casablanca"], title: "Casablanca", country: "Morocco", flag: "🇲🇦", fact: "Its Hassan II Mosque has the tallest minaret in the world at 210 metres" },
+      { names: ["amsterdam"], title: "Amsterdam", country: "the Netherlands", flag: "🇳🇱", fact: "It has more bicycles than people" },
+      { names: ["athens"], title: "Athens", country: "Greece", flag: "🇬🇷", fact: "The Parthenon on the Acropolis was finished in 432 BC" },
+      { names: ["vienna"], title: "Vienna", country: "Austria", flag: "🇦🇹", fact: "It gets voted the most liveable city in the world almost every year" },
+      { names: ["lisbon"], title: "Lisbon", country: "Portugal", flag: "🇵🇹", fact: "It is older than Rome, by about 400 years" }
     ];
 
     // ================================
@@ -494,6 +624,80 @@
       }
     }
 
+    // ================================
+    //  COUNTRIES AND CITIES
+    // ================================
+
+    // finds which country or city the message is talking about.
+    // the longest name wins, so "south korea" beats "korea"
+    function findPlace(text, list) {
+      var best = null;
+      var bestLength = 0;
+      for (var i = 0; i < list.length; i++) {
+        for (var j = 0; j < list[i].names.length; j++) {
+          var name = list[i].names[j];
+          if (name.length > bestLength && matches(text, name)) {
+            best = list[i];
+            bestLength = name.length;
+          }
+        }
+      }
+      return best;
+    }
+
+    // works out what you actually want to know about a country
+    function answerAboutCountry(text, c) {
+      if (text.indexOf("capital") !== -1) {
+        return "The capital of " + c.title + " is " + c.capital + " " + c.flag;
+      }
+      if (text.indexOf("language") !== -1 || text.indexOf("speak") !== -1) {
+        return "In " + c.title + " they speak " + c.language + " " + c.flag;
+      }
+      if (text.indexOf("currency") !== -1 || text.indexOf("money") !== -1) {
+        return "The currency of " + c.title + " is the " + c.money + " " + c.flag;
+      }
+      if (text.indexOf("population") !== -1 || text.indexOf("how many people") !== -1) {
+        return c.title + " has " + c.people + " people " + c.flag;
+      }
+      if (text.indexOf("continent") !== -1 || text.indexOf("where is") !== -1) {
+        return c.title + " is in " + c.continent + " " + c.flag;
+      }
+      if (text.indexOf("fact") !== -1 || text.indexOf("interesting") !== -1) {
+        return c.fact + " " + c.flag;
+      }
+      // no specific question, so give the full summary
+      return c.title + " " + c.flag + " is in " + c.continent + ". The capital is " + c.capital +
+             ", they speak " + c.language + ", the currency is the " + c.money +
+             ", and there are " + c.people + " people. Fun fact: " + c.fact + ".";
+    }
+
+    // same idea but for cities
+    function answerAboutCity(text, city) {
+      if (text.indexOf("country") !== -1 || text.indexOf("where is") !== -1) {
+        return city.title + " is a city in " + city.country + " " + city.flag;
+      }
+      if (text.indexOf("fact") !== -1 || text.indexOf("interesting") !== -1) {
+        return city.fact + " " + city.flag;
+      }
+      return city.title + " " + city.flag + " is a city in " + city.country + ". " + city.fact + ".";
+    }
+
+    // makes the first letter a capital, so "the UAE" becomes "The UAE"
+    function capitalise(text) {
+      return text.charAt(0).toUpperCase() + text.slice(1);
+    }
+
+    // checks countries first, then cities
+    function talkAboutPlaces(text) {
+      var country = findPlace(text, countries);
+      if (country) return capitalise(answerAboutCountry(text, country));
+
+      var city = findPlace(text, cities);
+      if (city) return capitalise(answerAboutCity(text, city));
+
+      return null;
+    }
+
     // looks through the brain for a matching keyword
     // "loose" means squash repeated letters on both sides,
     // so "helloo" can still find "hello"
@@ -527,10 +731,17 @@
       var mathAnswer = doMath(text);
       if (mathAnswer) return reply + mathAnswer;
 
-      // 3. normal keyword search
+      // 3. is it about a country or a city?
+      var place = talkAboutPlaces(text);
+      if (place) {
+        var placeStarter = (reply === "" && isQuestion(text)) ? random(starters) : "";
+        return reply + placeStarter + place;
+      }
+
+      // 4. normal keyword search
       var found = searchBrain(text);
 
-      // 4. try again with repeated letters squashed, so "helloo" finds "hello"
+      // 5. try again with repeated letters squashed, so "helloo" finds "hello"
       if (found === null) {
         found = searchBrain(squash(text), true);
       }
@@ -541,13 +752,13 @@
         return reply + starter + found;
       }
 
-      // 5. it was an idea but nothing matched
+      // 6. it was an idea but nothing matched
       if (reply !== "") {
         return reply + "Tell me more about it, I'd love to hear the details!";
       }
 
-      // 6. no clue at all
-      return random(noClue) + " Try asking me about coding, science, maths, geography or school. I can do sums too, like 10 plus 10 🙂";
+      // 7. no clue at all
+      return random(noClue) + " Try asking me about a country or a city, or about coding, science, maths or school. I can do sums too, like 10 plus 10 🙂";
     }
 
     // ================================

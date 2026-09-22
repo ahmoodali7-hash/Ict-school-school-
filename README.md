@@ -35,12 +35,37 @@ It understands symbols and words, so all of these work:
 - `20% of 50`
 - `square root of 144`
 
-## What it knows about
+## Countries and cities
+
+There is a table of 67 countries and 50 cities, so you can ask things like:
+
+- `capital of japan`
+- `tell me about egypt`
+- `what language do they speak in switzerland`
+- `currency of kuwait`
+- `population of india`
+- `where is peru`
+- `what country is cairo in`
+- `fun fact about ireland`
+
+Adding a new country is one line in the `countries` list:
+
+```js
+{ names: ["iceland"], title: "Iceland", capital: "Reykjavik", continent: "Europe",
+  people: "about 400 thousand", money: "Icelandic Krona", language: "Icelandic",
+  flag: "IS", fact: "It has no mosquitoes at all" },
+```
+
+If a place has more than one name, put them all in `names`, like
+`["usa", "america", "united states"]`. The longest name always wins, so
+`south korea` beats `korea`.
+
+## What else it knows about
 
 Coding (HTML, CSS, JavaScript, Python, Java, C++, SQL, Git, variables, loops,
 arrays, functions, APIs), science (gravity, DNA, atoms, planets, the human
-body, electricity), maths (pi, primes, areas, algebra), geography (capital
-cities, rivers, mountains, continents), plus school and study tips, jokes,
+body, electricity), maths (pi, primes, areas, algebra), world facts (biggest
+country, longest river, continents), plus school and study tips, jokes,
 football and small talk.
 
 ## Adding more knowledge
