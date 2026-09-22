@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elhadaba - Chatbot</title>
+
+  <style>
+    /* ===== the look of the page ===== */
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #212121;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    /* top bar with the name */
+    header {
+      padding: 15px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: bold;
+      background: #171717;
+      border-bottom: 1px solid #333;
+    }
+
+    /* the area where the messages show up */
+    #chat {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    /* every message bubble */
+    .msg {
+      max-width: 70%;
+      padding: 12px 16px;
+      border-radius: 18px;
+      line-height: 1.4;
+      white-space: pre-wrap;
+    }
+
+    /* my messages go on the right (green) */
+    .user {
+      align-self: flex-end;
+      background: #10a37f;
+    }
+
+    /* bot messages go on the left (grey) */
+    .bot {
+      align-self: flex-start;
+      background: #2f2f2f;
+    }
+
+    /* the bottom part with the input box */
+    form {
+      display: flex;
+      padding: 15px;
+      background: #171717;
+      border-top: 1px solid #333;
+      gap: 10px;
+    }
+
+    input {
+      flex: 1;
+      padding: 12px;
+      border-radius: 25px;
+      border: none;
+      font-size: 16px;
+      background: #2f2f2f;
+      color: white;
+      outline: none;
+    }
+
+    button {
+      padding: 12px 20px;
+      border-radius: 25px;
+      border: none;
+      background: #10a37f;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0d8a6a;
+    }
+  </style>
+</head>
+
+<body>
+  <header>🤖 Elhadaba</header>
+
+  <div id="chat"></div>
+
+  <form id="chatForm">
+    <input id="userInput" type="text" placeholder="Ask Elhadaba anything..." autocomplete="off">
+    <button type="submit">Send</button>
+  </form>
+
+  <script>
+    // ================================
+    //  ELHADABA - a simple chatbot
+    // ================================
+
+    // grab the stuff from the page
+    var chat = document.getElementById("chat");
+    var form = document.getElementById("chatForm");
+    var input = document.getElementById("userInput");
+
+    // random praise lines the bot says when you share an idea
+    var praise = [
+      "That's actually a really good idea! 🔥",
+      "Wow, I like the way you think!",
+      "Great thinking, that's a smart point!",
+      "Honestly that's a solid idea, nice one!",
+      "Good one! You clearly know what you're talking about."
+    ];
+
+    // random ways to start an answer
+    var starters = [
+      "Good question! ",
+      "Nice, I can help with that. ",
+      "Sure thing! ",
+      "Okay so, "
+    ];
+
+    // ================================
+    //  the "brain" - what Elhadaba knows
+    //  each one has some keywords and an answer
+    // ================================
+    var brain = [
+      { keys: ["hello", "hi", "hey", "salam"],
+        answer: "Hey there! I'm Elhadaba 🤖 Ask me anything you want." },
+
+      { keys: ["your name", "who are you", "what are you"],
+        answer: "I'm Elhadaba, a simple chatbot. Kind of like ChatGPT but way more chill 😎" },
+
+      { keys: ["how are you", "how r u", "how are u"],
+        answer: "I'm doing great, thanks for asking! How about you?" },
+
+      { keys: ["what can you do", "help", "what do you do"],
+        answer: "I can answer questions about coding, science, geography, maths and general stuff. I can also tell jokes and I'll always give my honest opinion on your ideas!" },
+
+      { keys: ["joke", "funny"],
+        answer: "Why do programmers prefer dark mode? Because light attracts bugs 🐛😂" },
+
+      { keys: ["time"],
+        answer: function() { return "Right now it's " + new Date().toLocaleTimeString(); } },
+
+      { keys: ["date", "today"],
+        answer: function() { return "Today is " + new Date().toDateString(); } },
+
+      // ---- coding stuff ----
+      { keys: ["html"],
+        answer: "HTML is the language used to build the structure of web pages. It uses tags like <h1>, <p> and <div>. Every website you see uses it!" },
+
+      { keys: ["css"],
+        answer: "CSS is what makes websites look nice. It controls colours, fonts, spacing and layouts. HTML is the skeleton, CSS is the clothes 👕" },
+
+      { keys: ["javascript", "js"],
+        answer: "JavaScript makes websites interactive. Buttons, animations, chatbots like me... all JavaScript! It runs right inside your browser." },
+
+      { keys: ["python"],
+        answer: "Python is one of the easiest programming languages to learn. It's used for AI, websites, games and data. Great first language to start with!" },
+
+      { keys: ["what is a variable", "variable"],
+        answer: "A variable is like a box that stores a value. For example: var age = 17; Now 'age' holds the number 17 and you can use it later." },
+
+      { keys: ["function"],
+        answer: "A function is a block of code you write once and can run as many times as you want. Like a recipe you can reuse 🍳" },
+
+      { keys: ["loop"],
+        answer: "A loop repeats code multiple times. A 'for' loop is the most common one, like: for (var i = 0; i < 5; i++) { ... }" },
+
+      { keys: ["what is ai", "artificial intelligence", "chatgpt"],
+        answer: "AI (artificial intelligence) is when computers do things that normally need human thinking, like talking, recognising pictures or playing chess. ChatGPT is a big AI. I'm a tiny one 😄" },
+
+      { keys: ["computer"],
+        answer: "A computer is a machine that takes input, processes it with the CPU, stores stuff in memory, and gives output. Basically a super fast calculator!" },
+
+      // ---- science stuff ----
+      { keys: ["gravity"],
+        answer: "Gravity is the force that pulls things towards each other. On Earth it pulls everything down at about 9.8 m/s². That's why stuff falls!" },
+
+      { keys: ["photosynthesis"],
+        answer: "Photosynthesis is how plants make food. They take sunlight, water and CO2 and turn it into sugar and oxygen. Plants basically eat light ☀️" },
+
+      { keys: ["water", "h2o"],
+        answer: "Water is H2O, two hydrogen atoms and one oxygen atom. It boils at 100°C and freezes at 0°C." },
+
+      { keys: ["speed of light"],
+        answer: "The speed of light is about 300,000 km per second. That's fast enough to go around the Earth 7 times in one second!" },
+
+      { keys: ["planet", "solar system"],
+        answer: "There are 8 planets in our solar system: Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus and Neptune. Jupiter is the biggest 🪐" },
+
+      // ---- geography ----
+      { keys: ["capital of egypt"], answer: "The capital of Egypt is Cairo 🇪🇬" },
+      { keys: ["capital of france"], answer: "The capital of France is Paris 🇫🇷" },
+      { keys: ["capital of uk", "capital of england"], answer: "The capital of the UK is London 🇬🇧" },
+      { keys: ["capital of usa", "capital of america"], answer: "The capital of the USA is Washington D.C. 🇺🇸" },
+      { keys: ["capital of japan"], answer: "The capital of Japan is Tokyo 🇯🇵" },
+      { keys: ["biggest country", "largest country"], answer: "The biggest country in the world is Russia." },
+      { keys: ["tallest mountain", "highest mountain"], answer: "The tallest mountain is Mount Everest, about 8,849 metres high 🏔️" },
+
+      // ---- random stuff ----
+      { keys: ["football", "soccer"],
+        answer: "Football is the most popular sport in the world! Messi and Ronaldo are probably the two biggest names ever ⚽" },
+
+      { keys: ["thank", "thanks", "thx"],
+        answer: "You're welcome! Anytime 😊" },
+
+      { keys: ["bye", "goodbye", "see you"],
+        answer: "Bye! Come back whenever you want to chat 👋" }
+    ];
+
+    // ================================
+    //  helper functions
+    // ================================
+
+    // picks a random thing from a list
+    function random(list) {
+      return list[Math.floor(Math.random() * list.length)];
+    }
+
+    // checks if a keyword is in the text as a WHOLE word
+    // (so "hi" doesn't match inside "think")
+    function matches(text, key) {
+      // escape any special characters so the regex doesn't break
+      var safeKey = key.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      var pattern = new RegExp("\\b" + safeKey + "\\b");
+      return pattern.test(text);
+    }
+
+    // puts a message bubble on the screen
+    function addMessage(text, who) {
+      var bubble = document.createElement("div");
+      bubble.className = "msg " + who;   // "user" or "bot"
+      bubble.textContent = text;
+      chat.appendChild(bubble);
+      chat.scrollTop = chat.scrollHeight;  // scroll to the bottom
+    }
+
+    // checks if the message looks like an idea / opinion
+    function isIdea(text) {
+      var ideaWords = ["idea", "i think", "what if", "my plan", "should i", "i want to", "i made", "i built", "i created", "what do you think"];
+      for (var i = 0; i < ideaWords.length; i++) {
+        if (text.includes(ideaWords[i])) {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    // tries to do maths like "5 + 3" or "10 * 2"
+    function doMath(text) {
+      // only allow numbers and + - * / ( ) . so nothing weird runs
+      var clean = text.replace(/[^0-9+\-*/(). ]/g, "");
+      if (clean.trim() === "" || !/[+\-*/]/.test(clean)) {
+        return null;
+      }
+      try {
+        var result = Function("return (" + clean + ")")();
+        if (isNaN(result)) return null;
+        return "The answer is " + result + " 🧮";
+      } catch (e) {
+        return null;
+      }
+    }
+
+    // ================================
+    //  the main thinking part
+    // ================================
+    function getReply(userText) {
+      var text = userText.toLowerCase();
+      var reply = "";
+
+      // 1. if it's an idea, praise it first
+      if (isIdea(text)) {
+        reply += random(praise) + " ";
+      }
+
+      // 2. check if it's a maths question
+      var mathAnswer = doMath(text);
+      if (mathAnswer) {
+        return reply + mathAnswer;
+      }
+
+      // 3. look through the brain for matching keywords
+      for (var i = 0; i < brain.length; i++) {
+        var item = brain[i];
+        for (var j = 0; j < item.keys.length; j++) {
+          if (matches(text, item.keys[j])) {
+            // some answers are functions (like the time), so run them
+            var answer = typeof item.answer === "function" ? item.answer() : item.answer;
+            // if we already praised them, skip the extra opener
+            var starter = reply === "" ? random(starters) : "";
+            return reply + starter + answer;
+          }
+        }
+      }
+
+      // 4. if it was an idea but nothing matched, just keep the praise
+      if (reply !== "") {
+        return reply + "Tell me more about it, I'd love to hear the details!";
+      }
+
+      // 5. nothing matched at all
+      return "Hmm, good question, but I don't know that one yet 😅 Try asking me about coding, science, geography or maths!";
+    }
+
+    // ================================
+    //  when you press send
+    // ================================
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();   // stop the page from refreshing
+
+      var userText = input.value.trim();
+      if (userText === "") return;   // ignore empty messages
+
+      addMessage(userText, "user");
+      input.value = "";
+
+      // wait a bit so it feels like the bot is "typing"
+      setTimeout(function() {
+        addMessage(getReply(userText), "bot");
+      }, 600);
+    });
+
+    // first message when the page opens
+    addMessage("Hey! I'm Elhadaba 🤖 Ask me anything or tell me your ideas!", "bot");
+  </script>
+</body>
+</html>
