@@ -77,6 +77,22 @@ There is a table of 67 countries and 50 cities, so you can ask things like:
 - `what country is cairo in`
 - `fun fact about ireland`
 
+It also remembers the last place you asked about, so you can use "it",
+"there" or "more" instead of saying the name again:
+
+```
+YOU: what is the capital of egypt
+BOT: The capital of Egypt is Cairo
+YOU: tell me some info about it
+BOT: Cairo is a city in Egypt. It is the biggest city in the Arab world...
+YOU: what language do they speak there
+BOT: In Egypt they speak Arabic
+```
+
+That works because `lastCountry` and `lastCity` hold whatever was found
+last. Questions only a country can answer, like language or currency,
+use the country, and everything else uses the city.
+
 Adding a new country is one line in the `countries` list:
 
 ```js

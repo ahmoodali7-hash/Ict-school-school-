@@ -134,6 +134,11 @@
     var userName = "";          // this stores the user's answer
     var favoriteSubject = "";
 
+    // Elhadaba remembers the last place you talked about,
+    // so you can say "it" or "there" instead of the name again
+    var lastCountry = null;
+    var lastCity = null;
+
     // grab the stuff from the page
     var chat = document.getElementById("chat");
     var input = document.getElementById("userInput");
@@ -697,13 +702,55 @@
       return text.charAt(0).toUpperCase() + text.slice(1);
     }
 
-    // checks countries first, then cities
+    // finds a city in the list using its exact name
+    function findCityByName(name) {
+      var lower = name.toLowerCase();
+      for (var i = 0; i < cities.length; i++) {
+        for (var j = 0; j < cities[i].names.length; j++) {
+          if (cities[i].names[j] === lower) return cities[i];
+        }
+      }
+      return null;
+    }
+
+    // checks countries first, then cities, and remembers what it found
     function talkAboutPlaces(text) {
       var country = findPlace(text, countries);
-      if (country) return capitalise(answerAboutCountry(text, country));
+      if (country) {
+        lastCountry = country;
+        // remember its capital too, so "it" after a capital question
+        // means the city we just named
+        lastCity = findCityByName(country.capital);
+        return capitalise(answerAboutCountry(text, country));
+      }
 
       var city = findPlace(text, cities);
-      if (city) return capitalise(answerAboutCity(text, city));
+      if (city) {
+        lastCity = city;
+        return capitalise(answerAboutCity(text, city));
+      }
+
+      return null;
+    }
+
+    // does the message mean "the place we were just talking about"?
+    function refersToLastPlace(text) {
+      return matches(text, "it") || matches(text, "its") || matches(text, "there") ||
+             text.indexOf("more") !== -1 || text.indexOf("that place") !== -1 ||
+             text.indexOf("that country") !== -1 || text.indexOf("that city") !== -1;
+    }
+
+    // answers about whatever place we last talked about
+    function answerAboutLastPlace(text) {
+      // these questions only a country can answer, so use the country
+      var countryOnly = (text.indexOf("language") !== -1 || text.indexOf("speak") !== -1 ||
+                         text.indexOf("currency") !== -1 || text.indexOf("money") !== -1 ||
+                         text.indexOf("population") !== -1 || text.indexOf("capital") !== -1 ||
+                         text.indexOf("continent") !== -1);
+
+      if (countryOnly && lastCountry) return capitalise(answerAboutCountry(text, lastCountry));
+      if (lastCity) return capitalise(answerAboutCity(text, lastCity));
+      if (lastCountry) return capitalise(answerAboutCountry(text, lastCountry));
 
       return null;
     }
@@ -815,12 +862,21 @@
         return reply + starter + found;
       }
 
-      // 6. it was an idea but nothing matched
+      // 6. nothing matched, but are they saying "it" about the last place?
+      if (refersToLastPlace(text)) {
+        var memory = answerAboutLastPlace(text);
+        if (memory) {
+          var memoryStarter = (reply === "" && isQuestion(text)) ? random(starters) : "";
+          return reply + memoryStarter + memory;
+        }
+      }
+
+      // 7. it was an idea but nothing matched
       if (reply !== "") {
         return reply + "Tell me more about it, I'd love to hear the details!";
       }
 
-      // 7. no clue at all
+      // 8. no clue at all
       return random(noClue) + " Try asking me about a country or a city, or about coding, science, maths or school. I can do sums too, like 10 plus 10 🙂";
     }
 
