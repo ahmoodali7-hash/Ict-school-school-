@@ -1,0 +1,469 @@
+<!doctype html>
+<!--
+  =====================================================================
+  DIGITAL BUSINESS CARD - Mahmoud Abdelfattah Ali
+  Building Inspector, Department of Housing, Government of Sharjah
+  =====================================================================
+
+  This ONE file holds the whole card:
+    1. HTML        - what is on the page (logo, name, phone, email ...)
+    2. CSS         - how it looks (colours, sizes, spacing)
+    3. JavaScript  - makes the "Save to Contacts" button work
+
+  How the card is used:
+    - The QR code (qr-code.png) opens this card's web address.
+    - Each row is a link: tap it to call, email or open the website.
+    - "Save to Contacts" adds Mahmoud Abdelfattah Ali to the phone's
+      contacts.
+
+  The live card is split into separate files (index.html, logo.png and
+  mahmoud-abdelfattah-ali.vcf). This file puts everything together so
+  the whole thing can be read and understood in one place.
+-->
+
+<!-- lang="en" = the page is in English, dir="ltr" = read left to right -->
+<html lang="en" dir="ltr">
+
+<!-- =================================================================
+     HEAD: information ABOUT the page. Nothing in here is shown on the
+     page itself, apart from the title on the browser tab.
+     ================================================================= -->
+<head>
+  <!-- Use UTF-8 so Arabic letters show correctly -->
+  <meta charset="utf-8">
+
+  <!-- Make the page fit the phone's screen width instead of showing a
+       tiny zoomed-out desktop page. viewport-fit=cover lets it use the
+       whole screen on iPhones that have a notch. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <!-- The text on the browser tab -->
+  <title>Mahmoud Abdelfattah Ali | Department of Housing, Government of Sharjah</title>
+
+  <!-- A short summary that search engines show under the link -->
+  <meta name="description" content="Contact details for Mahmoud Abdelfattah Ali, Building Inspector at the Department of Housing, Government of Sharjah.">
+
+  <!-- "Open Graph" tags: when the link is sent on WhatsApp or other
+       apps, these give the preview its title, text and picture -->
+  <meta property="og:title" content="Mahmoud Abdelfattah Ali">
+  <meta property="og:description" content="Building Inspector, Department of Housing, Government of Sharjah">
+  <meta property="og:image" content="https://ahmoodali7-hash.github.io/Ict-school-school-/card/logo.png">
+
+  <!-- The small icon on the browser tab, and the icon used if someone
+       adds the page to their iPhone home screen -->
+  <link rel="icon" href="https://ahmoodali7-hash.github.io/Ict-school-school-/card/logo.png">
+  <link rel="apple-touch-icon" href="https://ahmoodali7-hash.github.io/Ict-school-school-/card/logo.png">
+
+  <!-- Fonts from Google Fonts:
+         Marcellus - the elegant font for the name
+         Poppins   - the clean font for English text
+         Tajawal   - the font for Arabic text
+       The two "preconnect" lines make the fonts load a little faster. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Poppins:wght@400;500&family=Tajawal:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- ===============================================================
+       CSS: everything about how the card LOOKS
+       =============================================================== -->
+  <style>
+    /* ---- Colours ------------------------------------------------
+       Each colour is saved once as a "variable" (the names starting
+       with --). The rest of the CSS uses var(--name), so changing a
+       colour here changes it everywhere on the page. */
+    :root {
+      --paper:     #ffffff;  /* white page                            */
+      --ink:       #151515;  /* almost-black text                     */
+      --muted:     #6e685c;  /* warm grey for small labels            */
+      --gold:      #b08a34;  /* the gold: icons, pattern, button      */
+      --gold-dark: #957329;  /* darker gold when the button is pressed */
+      --hair:      #e9dfc6;  /* thin lines between the rows           */
+      --tint:      #faf6ec;  /* very light gold when a row is tapped  */
+      color-scheme: light;   /* keep the card white even in dark mode */
+    }
+
+    /* ---- Reset --------------------------------------------------
+       Browsers add their own spacing to many elements. Setting
+       margin and padding to 0 removes it, so we control every gap.
+       box-sizing: border-box means a box's width INCLUDES its padding
+       and border, which makes sizes much easier to work out. */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Stop iPhones from making the text bigger by themselves */
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
+    /* ---- The whole page ----------------------------------------- */
+    body {
+      background: var(--paper);
+      color: var(--ink);                      /* default text colour      */
+      font-family: Poppins, Tajawal, system-ui, sans-serif; /* first font that loads is used */
+      -webkit-font-smoothing: antialiased;    /* smoother text on iPhone  */
+      /* Extra space at the top and bottom on phones with a notch or a
+         home bar, so nothing hides behind them */
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    /* Links: no blue colour and no underline, they look like normal
+       text. The tap-highlight line removes the grey flash on iPhone. */
+    a {
+      color: inherit;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Lists: remove the bullet points */
+    ul {
+      list-style: none;
+    }
+
+    /* A gold outline when someone moves around the page with the
+       keyboard (Tab key), so they can see where they are */
+    :focus-visible {
+      outline: 2px solid var(--gold);
+      outline-offset: 3px;
+    }
+
+    /* Anything with class="ar" is Arabic, so use the Arabic font */
+    .ar {
+      font-family: Tajawal, system-ui, sans-serif;
+    }
+
+    /* ---- The card area ------------------------------------------ */
+    .page {
+      max-width: 420px;          /* never wider than a phone screen     */
+      margin: 0 auto;            /* "auto" left and right = centred     */
+      padding: 34px 24px 44px;   /* space inside: top, sides, bottom    */
+      text-align: center;
+    }
+
+    /* ---- Logo ---------------------------------------------------- */
+    .logo {
+      width: 186px;
+      max-width: 100%;           /* shrink if the screen is very small  */
+      height: auto;              /* keep the logo's shape               */
+      display: block;
+      margin: 0 auto;            /* centred                             */
+    }
+
+    /* ---- Name ---------------------------------------------------- */
+    .name {
+      font-family: Marcellus, Georgia, serif;
+      font-weight: 400;          /* normal, not bold                    */
+      font-size: 27px;
+      line-height: 1.2;
+      letter-spacing: .01em;
+      margin-top: 26px;          /* gap between the logo and the name   */
+    }
+
+    /* ---- Job title under the name (English, then Arabic) --------- */
+    .role {
+      font-size: 13.5px;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+    .role .ar {
+      display: block;            /* put the Arabic on its own line      */
+      font-size: 16px;
+      margin-top: 3px;
+    }
+
+    /* ---- Gold pattern line under the name ------------------------ */
+    .strip {
+      display: block;
+      margin: 26px 0 6px;
+    }
+
+    /* ---- The four contact rows ----------------------------------- */
+    .rows {
+      text-align: left;
+    }
+
+    /* Each row is one big link. "flex" puts the icon and the text
+       side by side, and align-items: center lines them up in the
+       middle. */
+    .rows li a {
+      display: flex;
+      align-items: center;
+      gap: 18px;                               /* space between icon and text */
+      padding: 15px 4px;
+      border-bottom: 1px solid var(--hair);    /* thin line under each row    */
+      transition: background-color .15s;       /* fade the tap colour in/out  */
+    }
+
+    /* No line under the last row */
+    .rows li:last-child a {
+      border-bottom: 0;
+    }
+
+    /* Light gold while a finger is pressing the row (:active) ...      */
+    .rows li a:active {
+      background: var(--tint);
+    }
+    /* ... and when a mouse is over it, but only on devices that have a
+       mouse. Without this check, phones would keep the colour stuck on
+       after a tap. */
+    @media (hover: hover) {
+      .rows li a:hover {
+        background: var(--tint);
+      }
+    }
+
+    /* The icons (phone, envelope, building, globe) */
+    .rows svg {
+      width: 24px;
+      height: 24px;
+      color: var(--gold);        /* the icons draw with "currentColor", so they turn gold */
+      flex: none;                /* icons never shrink                  */
+    }
+
+    /* The text part of a row takes all the space left after the icon.
+       min-width: 0 lets long text such as an email wrap instead of
+       pushing the row wider than the screen. */
+    .rows .txt {
+      flex: 1;
+      min-width: 0;
+    }
+
+    /* The small label line: English on the left, Arabic on the right.
+       space-between pushes the two to opposite ends. */
+    .lab {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .lab .ar {
+      font-size: 14.5px;         /* Arabic looks smaller, so make it bigger */
+    }
+
+    /* The big value: the number, the email or the website */
+    .val {
+      display: block;
+      font-size: 16px;
+      margin-top: 1px;
+      overflow-wrap: anywhere;   /* allow long emails to break onto a new line */
+    }
+
+    /* ---- Save to Contacts button --------------------------------- */
+    .save {
+      display: flex;             /* icon and text side by side          */
+      align-items: center;
+      justify-content: center;   /* centred inside the button           */
+      gap: 14px;
+      width: 100%;               /* as wide as the card                 */
+      margin-top: 26px;
+      padding: 13px 20px;
+      background: var(--gold);   /* filled gold ...                     */
+      color: #fff;               /* ... with white text                 */
+      border-radius: 2px;        /* very slightly rounded corners       */
+      line-height: 1.35;
+      transition: background-color .15s;
+    }
+    /* Darker gold while the button is pressed */
+    .save:active {
+      background: var(--gold-dark);
+    }
+    @media (hover: hover) {
+      .save:hover {
+        background: var(--gold-dark);
+      }
+    }
+    /* The "add person" icon on the button */
+    .save svg {
+      width: 26px;
+      height: 26px;
+      flex: none;
+    }
+    /* English and Arabic on two separate lines next to the icon */
+    .save .txt {
+      text-align: left;
+    }
+    .save .en {
+      display: block;
+      font-size: 15px;
+      font-weight: 500;          /* a little bolder                     */
+      letter-spacing: .02em;
+    }
+    .save .ar {
+      display: block;
+      font-size: 16px;
+    }
+
+    /* Small grey line of help text under the button */
+    .hint {
+      margin-top: 12px;
+      font-size: 12.5px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+
+<!-- =================================================================
+     BODY: everything that is SHOWN on the page
+     ================================================================= -->
+<body>
+<!-- <main> holds the whole card -->
+<main class="page">
+
+  <!-- ---- Department of Housing logo ----
+       The picture is loaded from the live website. width and height
+       tell the browser the logo's size before it loads, so the page
+       doesn't jump. alt is read out by screen readers for blind users. -->
+  <img class="logo"
+       src="https://ahmoodali7-hash.github.io/Ict-school-school-/card/logo.png"
+       width="467" height="486"
+       alt="Government of Sharjah, Department of Housing">
+
+  <!-- ---- Name ---- h1 = the main heading of the page -->
+  <h1 class="name">Mahmoud Abdelfattah Ali</h1>
+
+  <!-- ---- Job title ---- English, then Arabic on the next line.
+       lang="ar" dir="rtl" means the Arabic is read right to left. -->
+  <p class="role">Building Inspector<span class="ar" lang="ar" dir="rtl">مفتش مباني</span></p>
+
+  <!-- ---- Gold pattern line ----
+       Drawn with SVG (shapes made from code) instead of a picture, so it
+       stays sharp on every screen.
+         - The <pattern> is ONE 22 x 21 tile made of curved lines (arcs).
+         - The <rect> is a 100%-wide rectangle filled with that tile,
+           so the tile repeats across the whole width.
+       aria-hidden="true" tells screen readers to skip it, because it is
+       only decoration. -->
+  <svg class="strip" width="100%" height="21.053" aria-hidden="true">
+    <defs>
+      <pattern id="pt" width="22" height="21.053" patternUnits="userSpaceOnUse">
+        <!-- "A" in the path means "draw an arc" (part of a circle) -->
+        <path transform="translate(0,1)"
+              d="M0 0A22 22 0 0 0 11.000 19.053M0 0A22 22 0 0 1 11.000 19.053M11.000 19.053A22 22 0 0 0 22 0M11.000 19.053A22 22 0 0 1 22 0M0 0A22 22 0 0 0 22 0M-11.000 19.053A22 22 0 0 1 11.000 19.053M11.000 19.053A22 22 0 0 1 33.000 19.053"
+              fill="none" stroke="#b08a34" stroke-width="1.0"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#pt)"/>
+  </svg>
+
+  <!-- ---- Contact rows ----
+       Each <li> is one row. The <a> link inside it covers the whole row,
+       so tapping anywhere on the row works.
+       Special link types:
+         tel:    opens the phone app ready to call the number
+         mailto: opens the email app with the address filled in
+       Numbers are written with +971 (the UAE code), so the call works
+       from any country. -->
+  <ul class="rows">
+
+    <!-- Row 1: mobile number (056 151 6663) -->
+    <li><a href="tel:+971561516663">
+      <!-- Phone icon. viewBox sets a 24 x 24 drawing area, and
+           stroke="currentColor" draws it in the text colour (gold). -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6.6 3.5h2.9l1.4 3.9-1.9 1.3a11.5 11.5 0 0 0 6.3 6.3l1.3-1.9 3.9 1.4v2.9a2 2 0 0 1-2.2 2A16.5 16.5 0 0 1 4.6 5.7a2 2 0 0 1 2-2.2z"/></svg>
+      <span class="txt">
+        <!-- Label: English on the left, Arabic on the right -->
+        <span class="lab"><span>Direct line</span><span class="ar" lang="ar" dir="rtl">الهاتف المباشر</span></span>
+        <!-- The value shown -->
+        <span class="val">+971 56 151 6663</span>
+      </span>
+    </a></li>
+
+    <!-- Row 2: email -->
+    <li><a href="mailto:mahmoud.mobark@dh.sharjah.ae">
+      <!-- Envelope icon: a rectangle with a V shape on top -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="1.5"/><path d="M4 7l8 6 8-6"/></svg>
+      <span class="txt">
+        <span class="lab"><span>Email</span><span class="ar" lang="ar" dir="rtl">البريد الإلكتروني</span></span>
+        <span class="val">mahmoud.mobark@dh.sharjah.ae</span>
+      </span>
+    </a></li>
+
+    <!-- Row 3: department phone number -->
+    <li><a href="tel:+97165044444">
+      <!-- Building icon -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 20.5V4.5h9v16M14 9.5h5v11M3.5 20.5h17M8 8h3M8 11.5h3M8 15h3"/></svg>
+      <span class="txt">
+        <span class="lab"><span>Department</span><span class="ar" lang="ar" dir="rtl">هاتف الدائرة</span></span>
+        <span class="val">+971 6 504 4444</span>
+      </span>
+    </a></li>
+
+    <!-- Row 4: website.
+         target="_blank" opens it in a new tab, so the card stays open.
+         rel="noopener" is a safety setting that stops the new tab from
+         controlling this page. -->
+    <li><a href="https://www.dh.sharjah.ae" target="_blank" rel="noopener">
+      <!-- Globe icon: a circle with lines across it -->
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17M12 3.5c2.6 2.4 3.8 5.2 3.8 8.5s-1.2 6.1-3.8 8.5c-2.6-2.4-3.8-5.2-3.8-8.5s1.2-6.1 3.8-8.5z"/></svg>
+      <span class="txt">
+        <span class="lab"><span>Website</span><span class="ar" lang="ar" dir="rtl">الموقع الإلكتروني</span></span>
+        <span class="val">www.dh.sharjah.ae</span>
+      </span>
+    </a></li>
+  </ul>
+
+  <!-- ---- Save to Contacts button ----
+       It's a link with no address yet (href="#"). The JavaScript at the
+       bottom of the page gives it the contact file when the page loads. -->
+  <a class="save" id="save" href="#">
+    <!-- "Add person" icon: a head (circle), shoulders (curve) and a + sign -->
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9.5" cy="8" r="3.5"/><path d="M3 19.5c.6-3.4 3.2-5.5 6.5-5.5s5.9 2.1 6.5 5.5M18.5 8v6M15.5 11h6"/></svg>
+    <span class="txt">
+      <span class="en">Save to Contacts</span>
+      <span class="ar" lang="ar" dir="rtl">حفظ جهة الاتصال</span>
+    </span>
+  </a>
+  <p class="hint">Tap to add to your phone's contacts</p>
+</main>
+
+<!-- ===============================================================
+     JAVASCRIPT: makes the "Save to Contacts" button work
+     ===============================================================
+     Phones save contacts from a "vCard" (a .vcf file). A vCard is
+     plain text, one detail per line, written in a fixed format that
+     every phone understands.
+
+     The script below:
+       1. writes the vCard text,
+       2. turns it into a file inside the browser (a "Blob"),
+       3. connects that file to the button.
+
+     When the button is tapped, the phone gets the file
+     "mahmoud-abdelfattah-ali.vcf". Opening that file shows the contact
+     with a button to add it (iPhone: "Create New Contact", Android:
+     Contacts).
+  -->
+<script>
+  // ---- 1. The vCard, one line per detail ----
+  const vcard = [
+    'BEGIN:VCARD',                                          // start of the contact
+    'VERSION:3.0',                                          // vCard version that all phones read
+    'N:Ali;Mahmoud;Abdelfattah;;',                          // name in parts: Surname;First name;Middle name;Title;
+    'FN:Mahmoud Abdelfattah Ali',                           // full name, as it should be shown
+    'ORG:Government of Sharjah;Department of Housing',      // where he works: organisation;department
+    'TITLE:Building Inspector',                             // job title
+    'TEL;TYPE=CELL,VOICE,pref:+971561516663',               // mobile 056 151 6663 (pref = the main number)
+    'TEL;TYPE=WORK,VOICE:+97165044444',                     // department phone number
+    'EMAIL;TYPE=INTERNET,WORK:mahmoud.mobark@dh.sharjah.ae', // email address
+    'URL:https://www.dh.sharjah.ae',                        // website
+    'END:VCARD'                                             // end of the contact
+  ].join('\r\n') + '\r\n';  // join the lines with \r\n (carriage return + new line), the line
+                            // break vCards officially use, and end the last line with one too
+
+  // ---- 2. Turn the text into a file ----
+  // A Blob is a file that only exists in the browser's memory.
+  // type 'text/vcard' tells the phone it's a contact card.
+  const file = new Blob([vcard], { type: 'text/vcard' });
+
+  // ---- 3. Connect the file to the button ----
+  const button = document.getElementById('save');   // find the button by its id
+  button.href = URL.createObjectURL(file);           // make a link that points to the file
+  button.download = 'mahmoud-abdelfattah-ali.vcf';   // the file's name when it is saved
+</script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Ali;Mahmoud;Abdelfattah;;
+FN:Mahmoud Abdelfattah Ali
+ORG:Government of Sharjah;Department of Housing
+TITLE:Building Inspector
+TEL;TYPE=CELL,VOICE,pref:+971561516663
+TEL;TYPE=WORK,VOICE:+97165044444
+EMAIL;TYPE=INTERNET,WORK:mahmoud.mobark@dh.sharjah.ae
+URL:https://www.dh.sharjah.ae
+END:VCARD
