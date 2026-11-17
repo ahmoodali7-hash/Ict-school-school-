@@ -9,6 +9,8 @@ Department of Housing, Government of Sharjah. Scanning `qr-code.png` opens it.
 - `logo.png` - the Department of Housing logo shown at the top
 - `mahmoud-abdelfattah-ali.vcf` - the contact file the Save to Contacts button opens
 - `qr-code.png` - the QR code to print, it opens the card page
+- `all-in-one.html` - the whole card in one file (HTML, CSS and the contact)
+  with comments explaining every part
 
 ## Every row is a link
 

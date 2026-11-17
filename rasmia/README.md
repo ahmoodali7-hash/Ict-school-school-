@@ -11,6 +11,8 @@ Live at: https://ahmoodali7-hash.github.io/Ict-school-school-/rasmia/
 - `logo.png` - the school logo shown at the top
 - `rasmia-monzer.vcf` - the contact file the Save to contacts button opens
 - `qr-code.png` - the QR code to print, it opens the card page
+- `all-in-one.html` - the whole card in one file (HTML, CSS and the contact)
+  with comments explaining every part
 
 ## Every row is a link
 
